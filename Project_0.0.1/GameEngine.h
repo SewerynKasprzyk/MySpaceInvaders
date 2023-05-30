@@ -18,25 +18,30 @@
 
 class GameEngine
 {
-	//private variables
+	//Private variables
 	sf::RenderWindow* window;
 	unsigned width, height;
-	bool hold, hold_aproved, bullet_type;
 
-	//Resources
-	std::map<std::string, sf::Texture*> textures;
+	//Helper engines
+	PlayerEngine* playerEngine;
+	BulletsEngine* bulletsEngine;
+
+	//Enemies vector
 	std::vector<Bullet*> bullets;
 
 	//Player
 	Player* player;
+
+	//Enemy
 	Enemy* enemy;
 
 	//private functions
 	void initVariables();
 	void initWindow();
-	void initTextures();
 	void initPlayer();
 	void initEnemy();
+
+	void initEngines();
 
 public:
 	//Public Functions

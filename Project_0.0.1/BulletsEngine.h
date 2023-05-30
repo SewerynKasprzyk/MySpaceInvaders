@@ -19,6 +19,7 @@ public:
 
 	//Public functions
 	void BulletsInput();
+	void BulletsCulling();
 
 	//Constructor
 	BulletsEngine(std::vector<Bullet*>*, Player*);

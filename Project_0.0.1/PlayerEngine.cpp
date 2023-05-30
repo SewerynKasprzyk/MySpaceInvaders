@@ -1,6 +1,6 @@
 #include "PlayerEngine.h"
 
-void PlayerEngine::Player_input()
+void PlayerEngine::Player_Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 	{

@@ -46,6 +46,28 @@ void BulletsEngine::BulletsInput()
 	}
 }
 
+void BulletsEngine::BulletsCulling()
+{
+	unsigned counter = 0;
+	for (auto* bullet : *this->bullets)
+	{
+		bullet->update();
+
+		//Bullet culling
+		if (bullet->getBounds().top + bullet->getBounds().height < 0.f)
+		{
+			//Delete Bullet
+			delete this->bullets->at(counter);
+			this->bullets->erase(this->bullets->begin() + counter);
+			--counter;
+		}
+
+		std::cout << "Bullets counter: " << this->bullets->size() << std::endl;
+
+		++counter;
+	}
+}
+
 BulletsEngine::BulletsEngine(std::vector<Bullet*>* bullets, Player* player)
 {
 	this->bullets = bullets;
@@ -56,4 +78,8 @@ BulletsEngine::BulletsEngine(std::vector<Bullet*>* bullets, Player* player)
 
 BulletsEngine::~BulletsEngine()
 {
+	for (auto& i : this->textures)
+	{
+		delete i.second;
+	}
 }

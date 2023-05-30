@@ -7,7 +7,7 @@ class PlayerEngine
 
 public:
 
-	void Player_input();
+	void Player_Input();
 
 	//Constructor
 	PlayerEngine(Player*);

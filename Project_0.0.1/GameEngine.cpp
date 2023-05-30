@@ -5,9 +5,6 @@ void GameEngine::initVariables()
 {
 	this->width = 960;
 	this->height = 540;
-	//this->hold = false;
-	//this->hold_aproved = false;
-	//this->bullet_type = false;
 }
 
 void GameEngine::initWindow()
@@ -18,15 +15,6 @@ void GameEngine::initWindow()
 	this->window->setVerticalSyncEnabled(false);
 }
 
-void GameEngine::initTextures()
-{
-	/*this->textures["BULLET_01"] = new sf::Texture();
-	this->textures["BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\11.png");
-
-	this->textures["BULLET_02"] = new sf::Texture();
-	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");*/
-}
-
 void GameEngine::initPlayer()
 {
 	this->player = new Player(this->width, this->height);
@@ -35,6 +23,12 @@ void GameEngine::initPlayer()
 void GameEngine::initEnemy()
 {
 	this->enemy = new Enemy(0.f, 0.f);
+}
+
+void GameEngine::initEngines()
+{
+	this->playerEngine = new PlayerEngine(this->player);
+	this->bulletsEngine = new BulletsEngine(&this->bullets, this->player);
 }
 
 void GameEngine::run()
@@ -69,62 +63,14 @@ void GameEngine::updatePollEvents()
 
 void GameEngine::updateInput()
 {
+	this->playerEngine->Player_Input();
 
-	PlayerEngine playerEngine(this->player);
-	playerEngine.Player_input();
-
-	BulletsEngine bulletsEngine(&this->bullets, this->player);
-	bulletsEngine.BulletsInput();
-
-	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
-	{
-		if (!this->hold && this->player->readyToShoot())
-		{
-			if (!hold_aproved)
-			{
-				this->hold = true;
-			}
-
-			if (bullet_type)
-			{
-				this->bullets.push_back(new Bullet(this->textures["BULLET_01"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
-				bullet_type = false;
-			}
-			else
-			{
-				this->bullets.push_back(new Bullet(this->textures["BULLET_02"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
-				bullet_type = true;
-			}
-		}
-	}
-
-	else
-	{
-		this->hold = false;
-	}*/
-
+	this->bulletsEngine->BulletsInput();
 }
 
 void GameEngine::updateBullets()
 {
-	unsigned counter = 0;
-	for (auto* bullet : this->bullets)
-	{
-		bullet->update();
-
-		//Bullet culling
-		if (bullet->getBounds().top + bullet->getBounds().height < 0.f)
-		{
-			//Delete Bullet
-			delete this->bullets.at(counter);
-			this->bullets.erase(this->bullets.begin() + counter);
-			--counter;
-
-			std::cout << "Bullets counter: " << this->bullets.size() << std::endl;
-		}
-
-		++counter;
-	}
+	bulletsEngine->BulletsCulling();
 }
 
 void GameEngine::updateEnemy()
@@ -154,9 +100,11 @@ GameEngine::GameEngine()
 {
 	this->initVariables();
 	this->initWindow();
-	this->initTextures();
+
 	this->initPlayer();
 	this->initEnemy();
+
+	this->initEngines();
 }
 
 //Destructors
@@ -165,13 +113,13 @@ GameEngine::~GameEngine()
 	delete this->window;
 	delete this->player;
 
-	for (auto& i : this->textures)
-	{
-		delete i.second;
-	}
-
 	for (auto* i : this->bullets)
 	{
 		delete i;
 	}
+
+	delete this->enemy;
+
+	delete this->playerEngine;
+	delete this->bulletsEngine;
 }
