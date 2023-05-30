@@ -16,12 +16,15 @@
     <Filter Include="Including">
       <UniqueIdentifier>{dd8e81a8-f753-48fc-8adf-705bbf5ab457}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\Engine">
+      <UniqueIdentifier>{52357b03-8c86-4d58-8931-dec77be7b117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Engine">
+      <UniqueIdentifier>{e86d2fbb-fce2-4135-8795-fa5fa7f79908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngine.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -33,14 +36,17 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="BulletsEngine.cpp">
+      <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
     <ClCompile Include="EnemiesEnginge.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
     <ClCompile Include="PlayerEngine.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletsEngine.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +85,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameEngine.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -91,14 +94,17 @@
     <ClInclude Include="Enemy.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="BulletsEngine.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="EnemiesEnginge.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine.h">
+      <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
     <ClInclude Include="PlayerEngine.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletsEngine.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
