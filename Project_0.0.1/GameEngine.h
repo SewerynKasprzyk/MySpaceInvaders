@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "PlayerEngine.h"
+#include "BulletsEngine.h"
 
 #include <iostream>
 #include <map>

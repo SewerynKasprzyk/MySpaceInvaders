@@ -5,9 +5,9 @@ void GameEngine::initVariables()
 {
 	this->width = 960;
 	this->height = 540;
-	this->hold = false;
-	this->hold_aproved = false;
-	this->bullet_type = false;
+	//this->hold = false;
+	//this->hold_aproved = false;
+	//this->bullet_type = false;
 }
 
 void GameEngine::initWindow()
@@ -20,11 +20,11 @@ void GameEngine::initWindow()
 
 void GameEngine::initTextures()
 {
-	this->textures["BULLET_01"] = new sf::Texture();
+	/*this->textures["BULLET_01"] = new sf::Texture();
 	this->textures["BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\11.png");
 
 	this->textures["BULLET_02"] = new sf::Texture();
-	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");
+	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");*/
 }
 
 void GameEngine::initPlayer()
@@ -70,18 +70,13 @@ void GameEngine::updatePollEvents()
 void GameEngine::updateInput()
 {
 
-	//Move player
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
-	{
-		this->player->move(-1.f, 0.f);
-	}
+	PlayerEngine playerEngine(this->player);
+	playerEngine.Player_input();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
-	{
-		this->player->move(1.f, 0.f);
-	}
+	BulletsEngine bulletsEngine(&this->bullets, this->player);
+	bulletsEngine.BulletsInput();
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
+	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 	{
 		if (!this->hold && this->player->readyToShoot())
 		{
@@ -106,7 +101,7 @@ void GameEngine::updateInput()
 	else
 	{
 		this->hold = false;
-	}
+	}*/
 
 }
 
