@@ -1,12 +1,13 @@
-#include "Game.h"	
+#include "GameEngine.h"	
+#include <time.h>
 
 int main()
 {
 	std::cout << "Hello from SFML!" << std::endl;
 
-	Game game;
+	GameEngine gameEngine;
 
-	game.run();
+	gameEngine.run();
 
 	return 0;
 }

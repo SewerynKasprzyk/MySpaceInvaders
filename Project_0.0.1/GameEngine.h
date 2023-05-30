@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "Bullet.h"
+#include "Enemy.h"
 
 #include <iostream>
 #include <map>
@@ -13,7 +14,7 @@
 #include <SFML/Network.hpp>
 
 
-class Game
+class GameEngine
 {
 	//private variables
 	sf::RenderWindow* window;
@@ -26,12 +27,14 @@ class Game
 
 	//Player
 	Player* player;
+	Enemy* enemy;
 
 	//private functions
 	void initVariables();
 	void initWindow();
 	void initTextures();
 	void initPlayer();
+	void initEnemy();
 
 public:
 	//Public Functions
@@ -40,12 +43,13 @@ public:
 	void updatePollEvents();
 	void updateInput();
 	void updateBullets();
+	void updateEnemy();
 	void render();
 
 	//Constructors
-	Game();
+	GameEngine();
 
 	//Destructors
-	virtual ~Game();
+	virtual ~GameEngine();
 };
 

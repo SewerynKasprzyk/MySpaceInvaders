@@ -132,9 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="BulletsEngine.cpp" />
+    <ClCompile Include="EnemiesEnginge.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -151,8 +155,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="BulletsEngine.h" />
+    <ClInclude Include="EnemiesEnginge.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

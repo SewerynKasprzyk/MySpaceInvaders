@@ -1,7 +1,7 @@
-#include "Game.h"
+#include "GameEngine.h"
 
 //Private functions
-void Game::initVariables()
+void GameEngine::initVariables()
 {
 	this->width = 960;
 	this->height = 540;
@@ -10,7 +10,7 @@ void Game::initVariables()
 	this->bullet_type = false;
 }
 
-void Game::initWindow()
+void GameEngine::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(this->width, this->height), "Title", sf::Style::Close);
 
@@ -18,7 +18,7 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(false);
 }
 
-void Game::initTextures()
+void GameEngine::initTextures()
 {
 	this->textures["BULLET_01"] = new sf::Texture();
 	this->textures["BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\11.png");
@@ -27,12 +27,17 @@ void Game::initTextures()
 	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");
 }
 
-void Game::initPlayer()
+void GameEngine::initPlayer()
 {
 	this->player = new Player(this->width, this->height);
 }
 
-void Game::run()
+void GameEngine::initEnemy()
+{
+	this->enemy = new Enemy(0.f, 0.f);
+}
+
+void GameEngine::run()
 {
 	while (this->window->isOpen())
 	{
@@ -41,7 +46,7 @@ void Game::run()
 	}
 }
 
-void Game::update()
+void GameEngine::update()
 {
 	this->updatePollEvents();
 	this->updateInput();
@@ -49,7 +54,7 @@ void Game::update()
 	this->updateBullets();
 }
 
-void Game::updatePollEvents()
+void GameEngine::updatePollEvents()
 {
 	//Poll event
 	sf::Event ev;
@@ -62,8 +67,9 @@ void Game::updatePollEvents()
 	}
 }
 
-void Game::updateInput()
+void GameEngine::updateInput()
 {
+
 	//Move player
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 	{
@@ -104,7 +110,7 @@ void Game::updateInput()
 
 }
 
-void Game::updateBullets()
+void GameEngine::updateBullets()
 {
 	unsigned counter = 0;
 	for (auto* bullet : this->bullets)
@@ -126,7 +132,11 @@ void Game::updateBullets()
 	}
 }
 
-void Game::render()
+void GameEngine::updateEnemy()
+{
+}
+
+void GameEngine::render()
 {
 	this->window->clear();
 
@@ -139,20 +149,23 @@ void Game::render()
 		bullet->render(this->window);
 	}
 
+	this->enemy->render(this->window);
+
 	this->window->display();
 }
 
 //Constructors
-Game::Game()
+GameEngine::GameEngine()
 {
 	this->initVariables();
 	this->initWindow();
 	this->initTextures();
 	this->initPlayer();
+	this->initEnemy();
 }
 
 //Destructors
-Game::~Game()
+GameEngine::~GameEngine()
 {
 	delete this->window;
 	delete this->player;
