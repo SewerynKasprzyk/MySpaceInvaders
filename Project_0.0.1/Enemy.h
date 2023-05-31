@@ -11,7 +11,8 @@ class Enemy
 	//Private variables
 	sf::RectangleShape hitbox;
 	sf::Sprite sprite;
-	sf::Texture texture;
+	sf::Texture* texture1;
+	sf::Texture* texture2;
 
 	int hp, hpMax, damage, points;
 	float movementSpeed;
@@ -19,7 +20,6 @@ class Enemy
 	//Private functions
 	void initVariables();
 	void initHitbox();
-	void initTexture();
 	void initSprite();
 
 public:
@@ -29,8 +29,12 @@ public:
 	void render(sf::RenderTarget*);
 	void move(const float, const float);
 
+	//Accesors
+	const sf::FloatRect getBoundsHitbox() const;
+	const sf::FloatRect getBoundsSprite() const;
+
 	//Constructor
-	Enemy(const float, const float);
+	Enemy(sf::Texture*, sf::Texture*, const float, const float, float);
 
 	//Destructor
 	virtual ~Enemy();

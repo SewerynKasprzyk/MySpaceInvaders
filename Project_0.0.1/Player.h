@@ -32,6 +32,7 @@ public:
 
 	//Accessors
 	const sf::Vector2f getPos() const;
+	const sf::FloatRect getBounds() const;
 
 	Player(unsigned, unsigned);
 	virtual ~Player();

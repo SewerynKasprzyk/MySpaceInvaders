@@ -3,10 +3,12 @@
 
 class PlayerEngine
 {
+	//Private variables
 	Player* player;
 
 public:
 
+	//Public functions
 	void Player_Input();
 
 	//Constructor

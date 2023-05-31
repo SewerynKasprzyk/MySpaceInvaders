@@ -1,5 +1,6 @@
 #include "PlayerEngine.h"
 
+//Public functions
 void PlayerEngine::Player_Input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
@@ -13,11 +14,13 @@ void PlayerEngine::Player_Input()
 	}
 }
 
+//Constructor
 PlayerEngine::PlayerEngine(Player* player)
 {
 	this->player = player;
 }
 
+//Destructor
 PlayerEngine::~PlayerEngine()
 {
 }

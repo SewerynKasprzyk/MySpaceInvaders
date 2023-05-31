@@ -22,13 +22,14 @@ void GameEngine::initPlayer()
 
 void GameEngine::initEnemy()
 {
-	this->enemy = new Enemy(0.f, 0.f);
+	this->enemiesEngine->initEnemies();
 }
 
 void GameEngine::initEngines()
 {
 	this->playerEngine = new PlayerEngine(this->player);
 	this->bulletsEngine = new BulletsEngine(&this->bullets, this->player);
+	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemiesRow0, &this->enemiesRow1, &this->enemiesRow2, &this->enemiesRow3, &this->enemiesRow4);
 }
 
 void GameEngine::run()
@@ -54,7 +55,7 @@ void GameEngine::updatePollEvents()
 	sf::Event ev;
 	while (this->window->pollEvent(ev))
 	{
-		if (ev.Event::type == sf::Event::Closed || (ev.Event::KeyPressed && ev.Event::key.code == sf::Keyboard::Escape))
+		if ((ev.Event::type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape) || (ev.type == sf::Event::Closed))
 		{
 			this->window->close();
 		}
@@ -63,8 +64,8 @@ void GameEngine::updatePollEvents()
 
 void GameEngine::updateInput()
 {
+	//Run engines functions for input
 	this->playerEngine->Player_Input();
-
 	this->bulletsEngine->BulletsInput();
 }
 
@@ -90,7 +91,32 @@ void GameEngine::render()
 		bullet->render(this->window);
 	}
 
-	this->enemy->render(this->window);
+	for (auto* enemy : this->enemiesRow0)
+	{
+		enemy->render(this->window);
+	}
+
+	for (auto* enemy : this->enemiesRow1)
+	{
+		enemy->render(this->window);
+	}
+
+	for (auto* enemy : this->enemiesRow2)
+	{
+		enemy->render(this->window);
+	}
+
+	for (auto* enemy : this->enemiesRow3)
+	{
+		enemy->render(this->window);
+	}
+
+	for (auto* enemy : this->enemiesRow4)
+	{
+		enemy->render(this->window);
+	}
+
+	//this->enemy->render(this->window);
 
 	this->window->display();
 }
@@ -102,15 +128,17 @@ GameEngine::GameEngine()
 	this->initWindow();
 
 	this->initPlayer();
-	this->initEnemy();
 
 	this->initEngines();
+
+	this->initEnemy();
 }
 
 //Destructors
 GameEngine::~GameEngine()
 {
 	delete this->window;
+
 	delete this->player;
 
 	for (auto* i : this->bullets)
@@ -120,6 +148,32 @@ GameEngine::~GameEngine()
 
 	delete this->enemy;
 
+	for (auto* i : this->enemiesRow0)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->enemiesRow1)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->enemiesRow2)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->enemiesRow3)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->enemiesRow4)
+	{
+		delete i;
+	}
+
 	delete this->playerEngine;
 	delete this->bulletsEngine;
+	delete this->enemiesEngine;
 }

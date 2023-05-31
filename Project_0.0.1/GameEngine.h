@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "PlayerEngine.h"
 #include "BulletsEngine.h"
+#include "EnemiesEngine.h"
 
 #include <iostream>
 #include <map>
@@ -25,9 +26,17 @@ class GameEngine
 	//Helper engines
 	PlayerEngine* playerEngine;
 	BulletsEngine* bulletsEngine;
+	EnemiesEngine* enemiesEngine;
+
+	//Bullets vector
+	std::vector<Bullet*> bullets;
 
 	//Enemies vector
-	std::vector<Bullet*> bullets;
+	std::vector<Enemy*> enemiesRow0;
+	std::vector<Enemy*> enemiesRow1;
+	std::vector<Enemy*> enemiesRow2;
+	std::vector<Enemy*> enemiesRow3;
+	std::vector<Enemy*> enemiesRow4;
 
 	//Player
 	Player* player;

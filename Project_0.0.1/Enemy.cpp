@@ -12,20 +12,21 @@ void Enemy::initVariables()
 
 void Enemy::initHitbox()
 {
-	this->hitbox.setSize(sf::Vector2f(50.f, 50.f));
-	this->hitbox.setFillColor(sf::Color(0, 0, 0, 0));
-	this->hitbox.setOutlineThickness(1.f);
-	this->hitbox.setOutlineColor(sf::Color(255, 255, 255, 115));
-}
+	this->hitbox.setSize(sf::Vector2f(11.f, 9.f));
+	this->hitbox.setScale(4.f, 4.f);
 
-void Enemy::initTexture()
-{
-	this->texture;
+	this->hitbox.setFillColor(sf::Color(0, 0, 0, 0));
+	this->hitbox.setOutlineThickness(0.5f);
+	this->hitbox.setOutlineColor(sf::Color(255, 255, 255, 115));
+
+	//comment this if u want to see hitbox
+	this->hitbox.setOutlineColor(sf::Color(255, 255, 255, 0));
 }
 
 void Enemy::initSprite()
 {
-	this->sprite;
+	this->sprite.setTexture(*this->texture1);
+	this->sprite.setScale(4.f, 4.f);
 }
 
 //Public functions
@@ -46,15 +47,30 @@ void Enemy::move(const float movX, const float movY)
 	this->hitbox.move(this->movementSpeed * movX, this->movementSpeed * movY);
 }
 
+const sf::FloatRect Enemy::getBoundsHitbox() const
+{
+	return this->hitbox.getGlobalBounds();
+}
+
+const sf::FloatRect Enemy::getBoundsSprite() const
+{
+	return this->sprite.getGlobalBounds();
+}
+
 //Constructor
-Enemy::Enemy(const float posX, const float movY)
+Enemy::Enemy(sf::Texture* texture1, sf::Texture* texture2, const float posX, const float posY, float movementSpeed)
 {
 	this->initVariables();
+
+	this->texture1 = texture1;
+	this->texture2 = texture2;
+	this->movementSpeed = movementSpeed;
+
+	this->hitbox.setPosition(posX, posY);
+	this->sprite.setPosition(posX, posY);
+
 	this->initHitbox();
 	this->initSprite();
-
-	this->hitbox.setPosition(posX, movY);
-	this->sprite.setPosition(posX, movY);
 }
 
 //Destructor

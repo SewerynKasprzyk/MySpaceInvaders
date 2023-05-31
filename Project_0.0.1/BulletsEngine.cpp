@@ -29,12 +29,12 @@ void BulletsEngine::BulletsInput()
 
 			if (bullet_type)
 			{
-				this->bullets->push_back(new Bullet(this->textures["BULLET_01"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
+				this->bullets->push_back(new Bullet(this->textures["BULLET_01"], this->player->getPos().x + (this->player->getBounds().width / 2.f), this->player->getPos().y + (this->player->getBounds().height / 2.f), 0.f, -1.f, 5.f));
 				bullet_type = false;
 			}
 			else
 			{
-				this->bullets->push_back(new Bullet(this->textures["BULLET_02"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
+				this->bullets->push_back(new Bullet(this->textures["BULLET_02"], this->player->getPos().x + (this->player->getBounds().width/2.f), this->player->getPos().y + (this->player->getBounds().height/2.f), 0.f, -1.f, 5.f));
 				bullet_type = true;
 			}
 		}

@@ -5,7 +5,7 @@ void Bullet::initSprite()
 {
 	this->bullet.rotate(-90);
 	this->bullet.setScale(0.5f, 0.2f);
-	this->bullet.move(43.f, 43.f);
+	this->bullet.move((- bullet.getGlobalBounds().width / 2.f) - 2.f, -15.f);
 }
 
 void Bullet::update()

@@ -7,9 +7,10 @@ class BulletsEngine
 	//Private variables
 	std::vector<Bullet*>* bullets;
 	Player* player;
-
-	std::map<std::string, sf::Texture*> textures;
 	bool hold, hold_aproved, bullet_type;
+
+	//Resources
+	std::map<std::string, sf::Texture*> textures;
 
 	//Private functions
 	void initVariables();
@@ -27,4 +28,3 @@ public:
 	//Destructor
 	virtual ~BulletsEngine();
 };
-
