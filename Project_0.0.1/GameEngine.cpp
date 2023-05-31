@@ -29,7 +29,7 @@ void GameEngine::initEngines()
 {
 	this->playerEngine = new PlayerEngine(this->player);
 	this->bulletsEngine = new BulletsEngine(&this->bullets, this->player);
-	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemiesRow0, &this->enemiesRow1, &this->enemiesRow2, &this->enemiesRow3, &this->enemiesRow4);
+	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemies);
 }
 
 void GameEngine::run()
@@ -47,6 +47,7 @@ void GameEngine::update()
 	this->updateInput();
 	this->player->update();
 	this->updateBullets();
+	this->updateEnemy();
 }
 
 void GameEngine::updatePollEvents()
@@ -76,6 +77,7 @@ void GameEngine::updateBullets()
 
 void GameEngine::updateEnemy()
 {
+	enemiesEngine->updateEnemies();
 }
 
 void GameEngine::render()
@@ -86,37 +88,20 @@ void GameEngine::render()
 
 	this->player->render(this->window);
 
+	for (auto* enemy : this->enemies)
+	{
+		enemy->render(this->window);
+	}
+
+	for (auto* enemy : this->enemies)
+	{
+		enemy->render(this->window);
+	}
+
 	for (auto* bullet : this->bullets)
 	{
 		bullet->render(this->window);
 	}
-
-	for (auto* enemy : this->enemiesRow0)
-	{
-		enemy->render(this->window);
-	}
-
-	for (auto* enemy : this->enemiesRow1)
-	{
-		enemy->render(this->window);
-	}
-
-	for (auto* enemy : this->enemiesRow2)
-	{
-		enemy->render(this->window);
-	}
-
-	for (auto* enemy : this->enemiesRow3)
-	{
-		enemy->render(this->window);
-	}
-
-	for (auto* enemy : this->enemiesRow4)
-	{
-		enemy->render(this->window);
-	}
-
-	//this->enemy->render(this->window);
 
 	this->window->display();
 }
@@ -148,27 +133,7 @@ GameEngine::~GameEngine()
 
 	delete this->enemy;
 
-	for (auto* i : this->enemiesRow0)
-	{
-		delete i;
-	}
-
-	for (auto* i : this->enemiesRow1)
-	{
-		delete i;
-	}
-
-	for (auto* i : this->enemiesRow2)
-	{
-		delete i;
-	}
-
-	for (auto* i : this->enemiesRow3)
-	{
-		delete i;
-	}
-
-	for (auto* i : this->enemiesRow4)
+	for (auto* i : this->enemies)
 	{
 		delete i;
 	}

@@ -1,5 +1,8 @@
 #include "Enemy.h"
 
+//Static variables
+float Enemy::movementSpeed = 1.f;
+
 //Private functions
 void Enemy::initVariables()
 {
@@ -16,10 +19,9 @@ void Enemy::initHitbox()
 	this->hitbox.setScale(4.f, 4.f);
 
 	this->hitbox.setFillColor(sf::Color(0, 0, 0, 0));
-	this->hitbox.setOutlineThickness(0.5f);
-	this->hitbox.setOutlineColor(sf::Color(255, 255, 255, 115));
+	this->hitbox.setOutlineThickness(0.25f);
 
-	//comment this if u want to see hitbox
+	//put 0 here to hide hitbox (default 115) ------------v
 	this->hitbox.setOutlineColor(sf::Color(255, 255, 255, 0));
 }
 
@@ -56,6 +58,24 @@ const sf::FloatRect Enemy::getBoundsSprite() const
 {
 	return this->sprite.getGlobalBounds();
 }
+
+void Enemy::setMovementSpeed(float movementSpeed)
+{
+	this->movementSpeed = movementSpeed;
+}
+
+void Enemy::setTexture(bool texture)
+{
+	if (!texture)
+	{
+		sprite.setTexture(*this->texture1);
+	}
+	else
+	{
+		sprite.setTexture(*this->texture2);
+	}
+}
+
 
 //Constructor
 Enemy::Enemy(sf::Texture* texture1, sf::Texture* texture2, const float posX, const float posY, float movementSpeed)

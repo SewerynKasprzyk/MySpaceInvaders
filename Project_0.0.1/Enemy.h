@@ -15,7 +15,7 @@ class Enemy
 	sf::Texture* texture2;
 
 	int hp, hpMax, damage, points;
-	float movementSpeed;
+	static float movementSpeed;
 
 	//Private functions
 	void initVariables();
@@ -32,6 +32,8 @@ public:
 	//Accesors
 	const sf::FloatRect getBoundsHitbox() const;
 	const sf::FloatRect getBoundsSprite() const;
+	void setMovementSpeed(float);
+	void setTexture(bool);
 
 	//Constructor
 	Enemy(sf::Texture*, sf::Texture*, const float, const float, float);

@@ -1,18 +1,17 @@
 #pragma once
 #include "Enemy.h"
+#include <time.h>
 
 class EnemiesEngine
 {
 	//Private variables
 	unsigned enemyCounter, enemiesInWave;
+	int direction;
 	float movementSpeed;
 	sf::Vector2u windowSize;
+	int textureChange;
 
-	 std::vector<Enemy*>* enemiesRow0;
-	 std::vector<Enemy*>* enemiesRow1;
-	 std::vector<Enemy*>* enemiesRow2;
-	 std::vector<Enemy*>* enemiesRow3;
-	 std::vector<Enemy*>* enemiesRow4;
+	std::vector<Enemy*>* enemies;
 
 	//Resources
 	std::map<std::string, sf::Texture*> textures;
@@ -25,9 +24,10 @@ public:
 
 	//Public functions
 	void initEnemies();
+	void updateEnemies();
 
 	//Constructor
-	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>*, std::vector<Enemy*>*, std::vector<Enemy*>*, std::vector<Enemy*>*, std::vector<Enemy*>*);
+	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>*);
 
 	//Destructor
 	virtual ~EnemiesEngine();

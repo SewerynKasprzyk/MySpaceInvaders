@@ -32,11 +32,7 @@ class GameEngine
 	std::vector<Bullet*> bullets;
 
 	//Enemies vector
-	std::vector<Enemy*> enemiesRow0;
-	std::vector<Enemy*> enemiesRow1;
-	std::vector<Enemy*> enemiesRow2;
-	std::vector<Enemy*> enemiesRow3;
-	std::vector<Enemy*> enemiesRow4;
+	std::vector<Enemy*> enemies;
 
 	//Player
 	Player* player;
