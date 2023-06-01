@@ -1,11 +1,13 @@
 #pragma once
 #include "Bullet.h"
 #include "Player.h"
+#include "Enemy.h"
 
-class BulletsEngine
+class CombatEngine
 {
 	//Private variables
 	std::vector<Bullet*>* bullets;
+	std::vector<Enemy*>* enemies;
 	Player* player;
 	bool hold, hold_aproved, bullet_type;
 
@@ -21,10 +23,11 @@ public:
 	//Public functions
 	void BulletsInput();
 	void BulletsCulling();
+	void BulletsEnemyHit();
 
 	//Constructor
-	BulletsEngine(std::vector<Bullet*>*, Player*);
+	CombatEngine(std::vector<Bullet*>*, std::vector<Enemy*>*, Player*);
 
 	//Destructor
-	virtual ~BulletsEngine();
+	virtual ~CombatEngine();
 };

@@ -36,14 +36,20 @@ void EnemiesEngine::initTextures()
 void EnemiesEngine::initVariables()
 {
 	this->enemyCounter = 60;
+	this->speedCounter = this->enemyCounter;
 	this->movementSpeed = 0.08f;
 	this->enemiesInWave = 12;
-	this->direction = 1;
 	this->textureChange = 0;
+	this->direction = 1;
+	this->resetTimer = 0;
 }
 
 void EnemiesEngine::initEnemies()
 {
+
+	//For reseting wave direction
+	this->initVariables();
+
 	unsigned width = this->windowSize.x, height = this->windowSize.y;
 
 	for (unsigned i = 0; i < this->enemiesInWave; i++)
@@ -63,15 +69,22 @@ void EnemiesEngine::initEnemies()
 	}
 
 	//Default speed to static
+	//Must be here to proper initialize it
 	this->enemies[0][0]->setMovementSpeed(this->movementSpeed);
 }
 
 void EnemiesEngine::updateEnemies()
 {
 	srand(time(NULL));
+
+	this->enemyCounter = this->enemies->size();
+
 	//Moving waves
 	for (auto* enemy : *this->enemies)
 	{
+		//Change direction if any of enemy touches the left or right border
+		//Move down
+		//And move to avoid bug
 		if (enemy->getBoundsHitbox().left <= this->windowSize.x - this->windowSize.x || enemy->getBoundsHitbox().left + enemy->getBoundsHitbox().width >= this->windowSize.x)
 		{
 			this->direction *= -1;
@@ -81,28 +94,63 @@ void EnemiesEngine::updateEnemies()
 				enemydown->move(5.f * this->direction, ((this->windowSize.y * (3.f / 36.f)) / this->movementSpeed) / 3.f);
 			}
 
-			return;
+			//Break to avoid going out of vector range
+			//Don't change break for return in this case!!!
+			//There are major operations over loop
+			break;
 		}
 
+		//Speed up
+		if (this->speedCounter / 2 == this->enemyCounter)
+		{
+			this->speedCounter /= 2;
+			this->movementSpeed *= 1.5f;
+
+			//Static set
+			enemy->setMovementSpeed(this->movementSpeed);
+		}
+		
+
+		//Default move
 		enemy->move(5.f * this->direction, 0.f);
 
+		//Creates random moment of texture change to improve the animation
 		if (this->textureChange <= 100 && this->textureChange >= (std::rand() % 50) + 50)
 		{
 			enemy->setTexture(1);
 		}
 
-		if (this->textureChange >= (std::rand() % 50) + 150)
+		else if (this->textureChange >= (std::rand() % 50) + 150)
 		{
 			enemy->setTexture(0);
+		}	
+	}
+
+
+	//Texture change timer reset
+	if (this->textureChange >= 200)
+	{
+		this->textureChange = 0;
+		resetTimer++;
+	}
+
+	//Reset wave
+	else if (this->enemyCounter == 0)
+	{
+		if (this->resetTimer >= 10)
+		{
+			initEnemies();
 		}
 	}
 
-	if (this->textureChange == 200)
+	else
 	{
-		this->textureChange = 0;
+		this->resetTimer = 0;
 	}
 
-	this->textureChange++;
+
+	this->textureChange += 1 + 1 * 10 * this->movementSpeed;
+	//this->textureChange++;
 
 }
 

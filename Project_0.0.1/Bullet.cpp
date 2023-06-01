@@ -25,7 +25,7 @@ const sf::FloatRect Bullet::getBounds() const
 }
 
 //Constructor
-Bullet::Bullet(sf::Texture* texture, float posX, float posY, float movX, float movY, float movement_speed)
+Bullet::Bullet(sf::Texture* texture, float posX, float posY, float movX, float movY, float movement_speed, float damage)
 {
 	this->bullet.setTexture(*texture);
 
@@ -34,6 +34,8 @@ Bullet::Bullet(sf::Texture* texture, float posX, float posY, float movX, float m
 	this->direction.x = movX;
 	this->direction.y = movY;
 	this->movementSpeed = movement_speed;
+
+	this->damage = damage;
 
 	this->initSprite();
 }

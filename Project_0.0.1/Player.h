@@ -13,8 +13,9 @@ class Player
 	sf::Sprite sprite;
 	sf::Texture texture;
 	unsigned width, height;
+	sf::Vector2u windowSize;
 
-	float movementSpeed, bulletCd, bulletCdMax, bulletCdMultipler;
+	float movementSpeed, bulletCd, bulletCdMax, bulletCdMultipler, damage, damageMultipler, bulletSpeed, bulletSpeedMultipler;
 
 	//Private functions
 	void initVariables(unsigned, unsigned);
@@ -33,6 +34,8 @@ public:
 	//Accessors
 	const sf::Vector2f getPos() const;
 	const sf::FloatRect getBounds() const;
+	float getDamage() const;
+	float getBulletSpeed() const;
 
 	Player(unsigned, unsigned);
 	virtual ~Player();

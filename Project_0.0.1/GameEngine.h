@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "PlayerEngine.h"
-#include "BulletsEngine.h"
+#include "CombatEngine.h"
 #include "EnemiesEngine.h"
 
 #include <iostream>
@@ -22,10 +22,11 @@ class GameEngine
 	//Private variables
 	sf::RenderWindow* window;
 	unsigned width, height;
+	bool paused, pauseHold;
 
 	//Helper engines
 	PlayerEngine* playerEngine;
-	BulletsEngine* bulletsEngine;
+	CombatEngine* combatEngine;
 	EnemiesEngine* enemiesEngine;
 
 	//Bullets vector
@@ -51,10 +52,12 @@ class GameEngine
 public:
 	//Public Functions
 	void run();
+
 	void update();
+
 	void updatePollEvents();
 	void updateInput();
-	void updateBullets();
+	void updateCombat();
 	void updateEnemy();
 	void render();
 

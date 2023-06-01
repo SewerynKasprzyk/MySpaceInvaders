@@ -5,6 +5,8 @@ void GameEngine::initVariables()
 {
 	this->width = 960;
 	this->height = 540;
+	this->paused = false;
+	this->pauseHold = false;
 }
 
 void GameEngine::initWindow()
@@ -27,9 +29,9 @@ void GameEngine::initEnemy()
 
 void GameEngine::initEngines()
 {
-	this->playerEngine = new PlayerEngine(this->player);
-	this->bulletsEngine = new BulletsEngine(&this->bullets, this->player);
+	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
 	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemies);
+	this->combatEngine = new CombatEngine(&this->bullets, &this->enemies, this->player);
 }
 
 void GameEngine::run()
@@ -45,9 +47,13 @@ void GameEngine::update()
 {
 	this->updatePollEvents();
 	this->updateInput();
-	this->player->update();
-	this->updateBullets();
-	this->updateEnemy();
+
+	if (!this->paused)
+	{
+		this->player->update();
+		this->updateEnemy();
+		this->updateCombat();
+	}
 }
 
 void GameEngine::updatePollEvents()
@@ -65,14 +71,42 @@ void GameEngine::updatePollEvents()
 
 void GameEngine::updateInput()
 {
+	//Pause
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+	{
+		if (!this->pauseHold)
+		{
+			if (!this->paused)
+			{
+				this->paused = true;
+			}
+
+			else
+			{
+				this->paused = false;
+			}
+
+			this->pauseHold = true;
+		}
+	}
+
+	else
+	{
+		this->pauseHold = false;
+	}
+
 	//Run engines functions for input
-	this->playerEngine->Player_Input();
-	this->bulletsEngine->BulletsInput();
+	if (!this->paused)
+	{
+		this->playerEngine->Player_Input();
+		this->combatEngine->BulletsInput();
+	}
 }
 
-void GameEngine::updateBullets()
+void GameEngine::updateCombat()
 {
-	bulletsEngine->BulletsCulling();
+	combatEngine->BulletsEnemyHit();
+	combatEngine->BulletsCulling();
 }
 
 void GameEngine::updateEnemy()
@@ -139,6 +173,6 @@ GameEngine::~GameEngine()
 	}
 
 	delete this->playerEngine;
-	delete this->bulletsEngine;
+	delete this->combatEngine;
 	delete this->enemiesEngine;
 }

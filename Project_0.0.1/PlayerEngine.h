@@ -5,6 +5,7 @@ class PlayerEngine
 {
 	//Private variables
 	Player* player;
+	sf::Vector2u windowSize;
 
 public:
 
@@ -12,7 +13,7 @@ public:
 	void Player_Input();
 
 	//Constructor
-	PlayerEngine(Player*);
+	PlayerEngine(Player*, sf::Vector2u);
 
 	//Destructor
 	virtual ~PlayerEngine();

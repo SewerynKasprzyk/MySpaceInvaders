@@ -5,11 +5,11 @@
 class EnemiesEngine
 {
 	//Private variables
-	unsigned enemyCounter, enemiesInWave;
+	unsigned enemyCounter, enemiesInWave, speedCounter;
 	int direction;
 	float movementSpeed;
 	sf::Vector2u windowSize;
-	int textureChange;
+	int textureChange, resetTimer;
 
 	std::vector<Enemy*>* enemies;
 

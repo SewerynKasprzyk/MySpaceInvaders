@@ -6,9 +6,13 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->width = width;
 	this->height = height;
 	this->movementSpeed = 7.f;
-	this->bulletCdMultipler = 0.5;
+	this->bulletCdMultipler = 0.1f;
 	this->bulletCdMax = 100.f * bulletCdMultipler;
 	this->bulletCd = this->bulletCdMax;
+	this->damage = 5.f;
+	this->damageMultipler = 1.f;
+	this->bulletSpeed = 5.f;
+	this->bulletSpeedMultipler = 1.f;
 }
 
 void Player::initTexture()
@@ -76,6 +80,16 @@ const sf::Vector2f Player::getPos() const
 const sf::FloatRect Player::getBounds() const
 {
 	return this->sprite.getGlobalBounds();
+}
+
+float Player::getDamage() const
+{
+	return this->damage * this->damageMultipler;
+}
+
+float Player::getBulletSpeed() const
+{
+	return this->bulletSpeed * this->bulletSpeedMultipler;
 }
 
 Player::Player(unsigned posX, unsigned posY)

@@ -36,7 +36,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="BulletsEngine.cpp">
+    <ClCompile Include="CombatEngine.cpp">
       <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
     <ClCompile Include="EnemiesEngine.cpp">
@@ -94,7 +94,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="BulletsEngine.h">
+    <ClInclude Include="CombatEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
     <ClInclude Include="EnemiesEngine.h">

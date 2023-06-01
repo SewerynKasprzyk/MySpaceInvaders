@@ -14,7 +14,7 @@ class Bullet
 	sf::Sprite bullet;
 
 	sf::Vector2f direction;
-	float movementSpeed;
+	float movementSpeed, damage;
 
 	//Private functions
 	void initSprite();
@@ -29,7 +29,7 @@ public:
 	const sf::FloatRect getBounds() const;
 
 	//Constructor
-	Bullet(sf::Texture*, float, float, float, float, float);
+	Bullet(sf::Texture*, float, float, float, float, float, float);
 
 	//Destructor
 	virtual ~Bullet();
