@@ -32,8 +32,10 @@ public:
 	//Accesors
 	const sf::FloatRect getBoundsHitbox() const;
 	const sf::FloatRect getBoundsSprite() const;
+	const int getHP() const;
 	void setMovementSpeed(float);
 	void setTexture(bool);
+	void damageEnemy(float);
 
 	//Constructor
 	Enemy(sf::Texture*, sf::Texture*, const float, const float, float);

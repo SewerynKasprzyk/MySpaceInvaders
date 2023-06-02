@@ -27,6 +27,7 @@ public:
 
 	//Accesors
 	const sf::FloatRect getBounds() const;
+	const float getDamage() const;
 
 	//Constructor
 	Bullet(sf::Texture*, float, float, float, float, float, float);

@@ -59,6 +59,11 @@ const sf::FloatRect Enemy::getBoundsSprite() const
 	return this->sprite.getGlobalBounds();
 }
 
+const int Enemy::getHP() const
+{
+	return this->hp;
+}
+
 void Enemy::setMovementSpeed(float movementSpeed)
 {
 	this->movementSpeed = movementSpeed;
@@ -74,6 +79,11 @@ void Enemy::setTexture(bool texture)
 	{
 		sprite.setTexture(*this->texture2);
 	}
+}
+
+void Enemy::damageEnemy(float damage)
+{
+	this->hp -= damage;
 }
 
 

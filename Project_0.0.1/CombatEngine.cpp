@@ -80,14 +80,21 @@ void CombatEngine::BulletsEnemyHit()
 		{
 			if (bullet->getBounds().intersects(enemy->getBoundsHitbox()))
 			{
+				enemy->damageEnemy(bullet->getDamage());
+
+				if (enemy->getHP() <= 0)
+				{
+					delete this->enemies->at(i);
+					this->enemies->erase(this->enemies->begin() + i);
+
+					//Bug fix for going out of vector range
+					//break wont work becouse there are two vectors where data has been deleted
+					return;
+				}
+
 				delete this->bullets->at(j);
 				this->bullets->erase(this->bullets->begin() + j);
 
-				delete this->enemies->at(i);
-				this->enemies->erase(this->enemies->begin() + i);
-
-				//Bug fix for going out of vector range
-				//break wont work becouse there are two vectors where data has been deleted
 				return;
 			}
 

@@ -4,7 +4,7 @@
 void Bullet::initSprite()
 {
 	this->bullet.rotate(-90);
-	this->bullet.setScale(0.5f, 0.2f);
+	this->bullet.setScale(0.25f, 0.1f);
 	this->bullet.move((- bullet.getGlobalBounds().width / 2.f) - 2.f, -15.f);
 }
 
@@ -22,6 +22,11 @@ void Bullet::render(sf::RenderTarget* target)
 const sf::FloatRect Bullet::getBounds() const
 {
 	return this->bullet.getGlobalBounds();
+}
+
+const float Bullet::getDamage() const
+{
+	return this->damage;
 }
 
 //Constructor
