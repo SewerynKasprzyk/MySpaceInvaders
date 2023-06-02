@@ -3,6 +3,9 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "PlayerEngine.h"
+#include "CombatEngine.h"
+#include "EnemiesEngine.h"
 
 #include <iostream>
 #include <map>
@@ -16,33 +19,45 @@
 
 class GameEngine
 {
-	//private variables
+	//Private variables
 	sf::RenderWindow* window;
 	unsigned width, height;
-	bool hold, hold_aproved, bullet_type;
+	bool paused, pauseHold;
 
-	//Resources
-	std::map<std::string, sf::Texture*> textures;
+	//Helper engines
+	PlayerEngine* playerEngine;
+	CombatEngine* combatEngine;
+	EnemiesEngine* enemiesEngine;
+
+	//Bullets vector
 	std::vector<Bullet*> bullets;
+
+	//Enemies vector
+	std::vector<Enemy*> enemies;
 
 	//Player
 	Player* player;
+
+	//Enemy
 	Enemy* enemy;
 
 	//private functions
 	void initVariables();
 	void initWindow();
-	void initTextures();
 	void initPlayer();
 	void initEnemy();
+
+	void initEngines();
 
 public:
 	//Public Functions
 	void run();
+
 	void update();
+
 	void updatePollEvents();
 	void updateInput();
-	void updateBullets();
+	void updateCombat();
 	void updateEnemy();
 	void render();
 

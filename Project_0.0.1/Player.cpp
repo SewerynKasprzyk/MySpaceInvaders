@@ -6,9 +6,15 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->width = width;
 	this->height = height;
 	this->movementSpeed = 7.f;
-	this->bulletCdMultipler = 0.5;
+	this->bulletCdMultipler = 0.1f;
 	this->bulletCdMax = 100.f * bulletCdMultipler;
 	this->bulletCd = this->bulletCdMax;
+	this->damage = 5.f;
+	this->damageMultipler = 1.f;
+	this->bulletSpeed = 5.f;
+	this->bulletSpeedMultipler = 1.f;
+	this->hpMax = 100.f;
+	this->hp = this->hpMax;
 }
 
 void Player::initTexture()
@@ -26,7 +32,7 @@ void Player::initSprite()
 	this->sprite.setTexture(this->texture);
 
 	//Resize the sprite
-	this->sprite.scale(0.1f, 0.1f);
+	this->sprite.scale(0.075f, 0.075f);
 
 	this->sprite.setPosition(((this->width/2.f) - 50), (this->height - 100.f));
 }
@@ -67,10 +73,30 @@ void Player::move(const float movX, const float movY)
 	this->sprite.move(this->movementSpeed * movX, this->movementSpeed * movY);
 }
 
+void Player::damagePlayer(float damage)
+{
+	this->hp -= damage;
+}
+
 //Accessors
 const sf::Vector2f Player::getPos() const
 {
 	return this->sprite.getPosition();
+}
+
+const sf::FloatRect Player::getBounds() const
+{
+	return this->sprite.getGlobalBounds();
+}
+
+float Player::getDamage() const
+{
+	return this->damage * this->damageMultipler;
+}
+
+float Player::getBulletSpeed() const
+{
+	return this->bulletSpeed * this->bulletSpeedMultipler;
 }
 
 Player::Player(unsigned posX, unsigned posY)

@@ -132,8 +132,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletsEngine.cpp" />
-    <ClCompile Include="EnemiesEnginge.cpp" />
+    <ClCompile Include="CombatEngine.cpp" />
+    <ClCompile Include="EnemiesEngine.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,8 +155,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletsEngine.h" />
-    <ClInclude Include="EnemiesEnginge.h" />
+    <ClInclude Include="CombatEngine.h" />
+    <ClInclude Include="EnemiesEngine.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Player.h" />

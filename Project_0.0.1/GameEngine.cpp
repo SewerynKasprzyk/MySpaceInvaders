@@ -5,9 +5,8 @@ void GameEngine::initVariables()
 {
 	this->width = 960;
 	this->height = 540;
-	this->hold = false;
-	this->hold_aproved = false;
-	this->bullet_type = false;
+	this->paused = false;
+	this->pauseHold = false;
 }
 
 void GameEngine::initWindow()
@@ -18,15 +17,6 @@ void GameEngine::initWindow()
 	this->window->setVerticalSyncEnabled(false);
 }
 
-void GameEngine::initTextures()
-{
-	this->textures["BULLET_01"] = new sf::Texture();
-	this->textures["BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\11.png");
-
-	this->textures["BULLET_02"] = new sf::Texture();
-	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");
-}
-
 void GameEngine::initPlayer()
 {
 	this->player = new Player(this->width, this->height);
@@ -34,7 +24,14 @@ void GameEngine::initPlayer()
 
 void GameEngine::initEnemy()
 {
-	this->enemy = new Enemy(0.f, 0.f);
+	this->enemiesEngine->initEnemies();
+}
+
+void GameEngine::initEngines()
+{
+	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
+	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemies);
+	this->combatEngine = new CombatEngine(this->window->getSize(), &this->bullets, &this->enemies, this->player);
 }
 
 void GameEngine::run()
@@ -50,8 +47,13 @@ void GameEngine::update()
 {
 	this->updatePollEvents();
 	this->updateInput();
-	this->player->update();
-	this->updateBullets();
+
+	if (!this->paused)
+	{
+		this->playerEngine->update();
+		this->updateEnemy();
+		this->updateCombat();
+	}
 }
 
 void GameEngine::updatePollEvents()
@@ -60,7 +62,7 @@ void GameEngine::updatePollEvents()
 	sf::Event ev;
 	while (this->window->pollEvent(ev))
 	{
-		if (ev.Event::type == sf::Event::Closed || (ev.Event::KeyPressed && ev.Event::key.code == sf::Keyboard::Escape))
+		if ((ev.Event::type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape) || (ev.type == sf::Event::Closed))
 		{
 			this->window->close();
 		}
@@ -69,71 +71,50 @@ void GameEngine::updatePollEvents()
 
 void GameEngine::updateInput()
 {
-
-	//Move player
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
+	//Pause
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 	{
-		this->player->move(-1.f, 0.f);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
-	{
-		this->player->move(1.f, 0.f);
-	}
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
-	{
-		if (!this->hold && this->player->readyToShoot())
+		if (!this->pauseHold)
 		{
-			if (!hold_aproved)
+			if (!this->paused)
 			{
-				this->hold = true;
+				this->paused = true;
 			}
 
-			if (bullet_type)
-			{
-				this->bullets.push_back(new Bullet(this->textures["BULLET_01"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
-				bullet_type = false;
-			}
 			else
 			{
-				this->bullets.push_back(new Bullet(this->textures["BULLET_02"], this->player->getPos().x, this->player->getPos().y, 0.f, -1.f, 5.f));
-				bullet_type = true;
+				this->paused = false;
 			}
+
+			this->pauseHold = true;
 		}
 	}
 
 	else
 	{
-		this->hold = false;
+		this->pauseHold = false;
 	}
 
+	//Run engines functions for input
+	if (!this->paused)
+	{
+		this->playerEngine->Player_Input();
+		this->combatEngine->BulletsInput();
+	}
 }
 
-void GameEngine::updateBullets()
+void GameEngine::updateCombat()
 {
-	unsigned counter = 0;
-	for (auto* bullet : this->bullets)
-	{
-		bullet->update();
-
-		//Bullet culling
-		if (bullet->getBounds().top + bullet->getBounds().height < 0.f)
-		{
-			//Delete Bullet
-			delete this->bullets.at(counter);
-			this->bullets.erase(this->bullets.begin() + counter);
-			--counter;
-
-			std::cout << "Bullets counter: " << this->bullets.size() << std::endl;
-		}
-
-		++counter;
-	}
+	this->combatEngine->BulletsEnemyHit();
+	this->combatEngine->BulletsCulling();
+	this->combatEngine->BulletsPlayerHit();
+	this->combatEngine->enemyIntersectPlayer();
+	this->combatEngine->enemyShoot();
 }
 
 void GameEngine::updateEnemy()
 {
+	enemiesEngine->updateEnemies();
 }
 
 void GameEngine::render()
@@ -144,12 +125,15 @@ void GameEngine::render()
 
 	this->player->render(this->window);
 
+	for (auto* enemy : this->enemies)
+	{
+		enemy->render(this->window);
+	}
+
 	for (auto* bullet : this->bullets)
 	{
 		bullet->render(this->window);
 	}
-
-	this->enemy->render(this->window);
 
 	this->window->display();
 }
@@ -159,8 +143,11 @@ GameEngine::GameEngine()
 {
 	this->initVariables();
 	this->initWindow();
-	this->initTextures();
+
 	this->initPlayer();
+
+	this->initEngines();
+
 	this->initEnemy();
 }
 
@@ -168,15 +155,22 @@ GameEngine::GameEngine()
 GameEngine::~GameEngine()
 {
 	delete this->window;
-	delete this->player;
 
-	for (auto& i : this->textures)
-	{
-		delete i.second;
-	}
+	delete this->player;
 
 	for (auto* i : this->bullets)
 	{
 		delete i;
 	}
+
+	delete this->enemy;
+
+	for (auto* i : this->enemies)
+	{
+		delete i;
+	}
+
+	delete this->playerEngine;
+	delete this->combatEngine;
+	delete this->enemiesEngine;
 }
