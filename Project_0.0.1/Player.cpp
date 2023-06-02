@@ -13,6 +13,8 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->damageMultipler = 1.f;
 	this->bulletSpeed = 5.f;
 	this->bulletSpeedMultipler = 1.f;
+	this->hpMax = 100.f;
+	this->hp = this->hpMax;
 }
 
 void Player::initTexture()
@@ -69,6 +71,11 @@ void Player::render(sf::RenderTarget* target)
 void Player::move(const float movX, const float movY)
 {
 	this->sprite.move(this->movementSpeed * movX, this->movementSpeed * movY);
+}
+
+void Player::damagePlayer(float damage)
+{
+	this->hp -= damage;
 }
 
 //Accessors

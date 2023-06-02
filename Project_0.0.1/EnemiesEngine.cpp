@@ -57,15 +57,15 @@ void EnemiesEngine::initEnemies()
 		//Resolution is 16:9 
 		//So it can be 32:18 / 64:36 for mathematically setting up position on screen
 		//wave 0
-		enemies->push_back(new Enemy(this->textures["INVADER_2_1"], this->textures["INVADER_2_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (7.f / 36.f), this->movementSpeed));
+		enemies->push_back(new Enemy(this->textures["INVADER_2_1"], this->textures["INVADER_2_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (7.f / 36.f), this->movementSpeed, 30));
 		//wave 1
-		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (10.f / 36.f), this->movementSpeed));
+		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (10.f / 36.f), this->movementSpeed, 20));
 		//wave 2
-		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (13.f / 36.f), this->movementSpeed));
+		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (13.f / 36.f), this->movementSpeed, 20));
 		//wave 3
-		enemies->push_back(new Enemy(this->textures["INVADER_4_1"], this->textures["INVADER_4_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (16.f / 36.f), this->movementSpeed));
+		enemies->push_back(new Enemy(this->textures["INVADER_4_1"], this->textures["INVADER_4_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (16.f / 36.f), this->movementSpeed, 10));
 		//wave 4
-		enemies->push_back(new Enemy(this->textures["INVADER_3_1"], this->textures["INVADER_3_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (19.f / 36.f), this->movementSpeed));
+		enemies->push_back(new Enemy(this->textures["INVADER_3_1"], this->textures["INVADER_3_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (19.f / 36.f), this->movementSpeed, 10));
 	}
 
 	//Default speed to static

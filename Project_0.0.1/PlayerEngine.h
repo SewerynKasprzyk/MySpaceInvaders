@@ -11,6 +11,7 @@ public:
 
 	//Public functions
 	void Player_Input();
+	void update();
 
 	//Constructor
 	PlayerEngine(Player*, sf::Vector2u);

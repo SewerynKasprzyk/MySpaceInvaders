@@ -29,6 +29,19 @@ const float Bullet::getDamage() const
 	return this->damage;
 }
 
+const bool Bullet::isEnemyBullet() const
+{
+	if (this->direction.y < 0.f)
+	{
+		return false;
+	}
+
+	else
+	{
+		return true;
+	}
+}
+
 //Constructor
 Bullet::Bullet(sf::Texture* texture, float posX, float posY, float movX, float movY, float movement_speed, float damage)
 {
@@ -43,6 +56,11 @@ Bullet::Bullet(sf::Texture* texture, float posX, float posY, float movX, float m
 	this->damage = damage;
 
 	this->initSprite();
+
+	if (isEnemyBullet())
+	{
+		this->bullet.rotate(180);
+	}
 }
 
 //Destructor

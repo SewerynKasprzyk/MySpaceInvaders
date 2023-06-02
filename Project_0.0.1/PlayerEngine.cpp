@@ -20,6 +20,11 @@ void PlayerEngine::Player_Input()
 	}
 }
 
+void PlayerEngine::update()
+{
+	player->update();
+}
+
 //Constructor
 PlayerEngine::PlayerEngine(Player* player, sf::Vector2u windowSize)
 {

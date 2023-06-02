@@ -49,6 +49,12 @@ void Enemy::move(const float movX, const float movY)
 	this->hitbox.move(this->movementSpeed * movX, this->movementSpeed * movY);
 }
 
+void Enemy::damageEnemy(float damage)
+{
+	this->hp -= damage;
+}
+
+//Accesors
 const sf::FloatRect Enemy::getBoundsHitbox() const
 {
 	return this->hitbox.getGlobalBounds();
@@ -62,6 +68,11 @@ const sf::FloatRect Enemy::getBoundsSprite() const
 const int Enemy::getHP() const
 {
 	return this->hp;
+}
+
+const int Enemy::getPoints() const
+{
+	return this->points;
 }
 
 void Enemy::setMovementSpeed(float movementSpeed)
@@ -81,20 +92,16 @@ void Enemy::setTexture(bool texture)
 	}
 }
 
-void Enemy::damageEnemy(float damage)
-{
-	this->hp -= damage;
-}
-
 
 //Constructor
-Enemy::Enemy(sf::Texture* texture1, sf::Texture* texture2, const float posX, const float posY, float movementSpeed)
+Enemy::Enemy(sf::Texture* texture1, sf::Texture* texture2, const float posX, const float posY, float movementSpeed, int points)
 {
 	this->initVariables();
 
 	this->texture1 = texture1;
 	this->texture2 = texture2;
 	this->movementSpeed = movementSpeed;
+	this->points = points;
 
 	this->hitbox.setPosition(posX, posY);
 	this->sprite.setPosition(posX, posY);

@@ -14,6 +14,7 @@ class Player
 	sf::Texture texture;
 	unsigned width, height;
 	sf::Vector2u windowSize;
+	float hp, hpMax;
 
 	float movementSpeed, bulletCd, bulletCdMax, bulletCdMultipler, damage, damageMultipler, bulletSpeed, bulletSpeedMultipler;
 
@@ -30,6 +31,7 @@ public:
 	const bool readyToShoot();
 	void render(sf::RenderTarget*);
 	void move(const float, const float);
+	void damagePlayer(float);
 
 	//Accessors
 	const sf::Vector2f getPos() const;

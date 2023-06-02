@@ -31,7 +31,7 @@ void GameEngine::initEngines()
 {
 	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
 	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemies);
-	this->combatEngine = new CombatEngine(&this->bullets, &this->enemies, this->player);
+	this->combatEngine = new CombatEngine(this->window->getSize(), &this->bullets, &this->enemies, this->player);
 }
 
 void GameEngine::run()
@@ -50,7 +50,7 @@ void GameEngine::update()
 
 	if (!this->paused)
 	{
-		this->player->update();
+		this->playerEngine->update();
 		this->updateEnemy();
 		this->updateCombat();
 	}
@@ -105,8 +105,11 @@ void GameEngine::updateInput()
 
 void GameEngine::updateCombat()
 {
-	combatEngine->BulletsEnemyHit();
-	combatEngine->BulletsCulling();
+	this->combatEngine->BulletsEnemyHit();
+	this->combatEngine->BulletsCulling();
+	this->combatEngine->BulletsPlayerHit();
+	this->combatEngine->enemyIntersectPlayer();
+	this->combatEngine->enemyShoot();
 }
 
 void GameEngine::updateEnemy()
@@ -121,11 +124,6 @@ void GameEngine::render()
 	//Draw all the stuffs
 
 	this->player->render(this->window);
-
-	for (auto* enemy : this->enemies)
-	{
-		enemy->render(this->window);
-	}
 
 	for (auto* enemy : this->enemies)
 	{

@@ -28,17 +28,18 @@ public:
 	void update();
 	void render(sf::RenderTarget*);
 	void move(const float, const float);
+	void damageEnemy(float);
 
 	//Accesors
 	const sf::FloatRect getBoundsHitbox() const;
 	const sf::FloatRect getBoundsSprite() const;
 	const int getHP() const;
+	const int getPoints() const;
 	void setMovementSpeed(float);
 	void setTexture(bool);
-	void damageEnemy(float);
 
 	//Constructor
-	Enemy(sf::Texture*, sf::Texture*, const float, const float, float);
+	Enemy(sf::Texture*, sf::Texture*, const float, const float, float, int);
 
 	//Destructor
 	virtual ~Enemy();
