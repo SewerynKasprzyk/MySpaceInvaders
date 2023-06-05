@@ -44,10 +44,10 @@ class GameEngine
 	//private functions
 	void initVariables();
 	void initWindow();
+
 	void initPlayer();
 	void initEnemy();
-
-	void initEngines();
+	void initCombat();
 
 public:
 	//Public Functions
@@ -57,8 +57,9 @@ public:
 
 	void updatePollEvents();
 	void updateInput();
-	void updateCombat();
+	void updatePlayer();
 	void updateEnemy();
+	void updateCombat();
 	void render();
 
 	//Constructors

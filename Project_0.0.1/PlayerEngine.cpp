@@ -25,10 +25,14 @@ void PlayerEngine::update()
 	player->update();
 }
 
-//Constructor
-PlayerEngine::PlayerEngine(Player* player, sf::Vector2u windowSize)
+void PlayerEngine::initPlayer()
 {
-	this->player = player;
+	this->player = new Player(this->windowSize.x, this->windowSize.y);
+}
+
+//Constructor
+PlayerEngine::PlayerEngine(Player*& player, sf::Vector2u windowSize) : player(player)
+{
 	this->windowSize = windowSize;
 }
 

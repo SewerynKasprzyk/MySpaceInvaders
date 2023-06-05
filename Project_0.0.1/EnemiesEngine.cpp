@@ -57,30 +57,30 @@ void EnemiesEngine::initEnemies()
 		//Resolution is 16:9 
 		//So it can be 32:18 / 64:36 for mathematically setting up position on screen
 		//wave 0
-		enemies->push_back(new Enemy(this->textures["INVADER_2_1"], this->textures["INVADER_2_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (7.f / 36.f), this->movementSpeed, 30));
+		enemies.push_back(new Enemy(this->textures["INVADER_2_1"], this->textures["INVADER_2_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (7.f / 36.f), this->movementSpeed, 30));
 		//wave 1
-		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (10.f / 36.f), this->movementSpeed, 20));
+		enemies.push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (10.f / 36.f), this->movementSpeed, 20));
 		//wave 2
-		enemies->push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (13.f / 36.f), this->movementSpeed, 20));
+		enemies.push_back(new Enemy(this->textures["INVADER_1_1"], this->textures["INVADER_1_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (13.f / 36.f), this->movementSpeed, 20));
 		//wave 3
-		enemies->push_back(new Enemy(this->textures["INVADER_4_1"], this->textures["INVADER_4_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (16.f / 36.f), this->movementSpeed, 10));
+		enemies.push_back(new Enemy(this->textures["INVADER_4_1"], this->textures["INVADER_4_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (16.f / 36.f), this->movementSpeed, 10));
 		//wave 4
-		enemies->push_back(new Enemy(this->textures["INVADER_3_1"], this->textures["INVADER_3_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (19.f / 36.f), this->movementSpeed, 10));
+		enemies.push_back(new Enemy(this->textures["INVADER_3_1"], this->textures["INVADER_3_2"], i * (width * (2.f / 32.f)) + (width * (4.5f / 32.f)), height * (19.f / 36.f), this->movementSpeed, 10));
 	}
 
 	//Default speed to static
 	//Must be here to proper initialize it
-	this->enemies[0][0]->setMovementSpeed(this->movementSpeed);
+	this->enemies[0]->setMovementSpeed(this->movementSpeed);
 }
 
 void EnemiesEngine::updateEnemies()
 {
 	srand(time(NULL));
 
-	this->enemyCounter = this->enemies->size();
+	this->enemyCounter = this->enemies.size();
 
 	//Moving waves
-	for (auto* enemy : *this->enemies)
+	for (auto* enemy : this->enemies)
 	{
 		//Change direction if any of enemy touches the left or right border
 		//Move down
@@ -89,7 +89,7 @@ void EnemiesEngine::updateEnemies()
 		{
 			this->direction *= -1;
 
-			for (auto* enemydown : *this->enemies)
+			for (auto* enemydown : this->enemies)
 			{
 				enemydown->move(5.f * this->direction, ((this->windowSize.y * (3.f / 36.f)) / this->movementSpeed) / 3.f);
 			}
@@ -154,14 +154,12 @@ void EnemiesEngine::updateEnemies()
 
 }
 
-EnemiesEngine::EnemiesEngine(sf::Vector2u windowSize, std::vector<Enemy*>* enemies)
+EnemiesEngine::EnemiesEngine(sf::Vector2u windowSize, std::vector<Enemy*> &enemies) : enemies(enemies)
 {
 	this->initVariables();
 	this->initTextures();
 
 	this->windowSize = windowSize;
-
-	this->enemies = enemies;
 }
 
 EnemiesEngine::~EnemiesEngine()

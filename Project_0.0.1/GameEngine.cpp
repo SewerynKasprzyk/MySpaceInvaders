@@ -19,19 +19,19 @@ void GameEngine::initWindow()
 
 void GameEngine::initPlayer()
 {
-	this->player = new Player(this->width, this->height);
+	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
+	this->playerEngine->initPlayer();
 }
 
 void GameEngine::initEnemy()
 {
+	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), this->enemies);
 	this->enemiesEngine->initEnemies();
 }
 
-void GameEngine::initEngines()
+void GameEngine::initCombat()
 {
-	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
-	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), &this->enemies);
-	this->combatEngine = new CombatEngine(this->window->getSize(), &this->bullets, &this->enemies, this->player);
+	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player);
 }
 
 void GameEngine::run()
@@ -50,7 +50,7 @@ void GameEngine::update()
 
 	if (!this->paused)
 	{
-		this->playerEngine->update();
+		this->updatePlayer();
 		this->updateEnemy();
 		this->updateCombat();
 	}
@@ -103,6 +103,11 @@ void GameEngine::updateInput()
 	}
 }
 
+void GameEngine::updatePlayer()
+{
+	this->playerEngine->update();
+}
+
 void GameEngine::updateCombat()
 {
 	this->combatEngine->BulletsEnemyHit();
@@ -114,14 +119,13 @@ void GameEngine::updateCombat()
 
 void GameEngine::updateEnemy()
 {
-	enemiesEngine->updateEnemies();
+	this->enemiesEngine->updateEnemies();
 }
 
+//Render
 void GameEngine::render()
 {
 	this->window->clear();
-
-	//Draw all the stuffs
 
 	this->player->render(this->window);
 
@@ -145,10 +149,8 @@ GameEngine::GameEngine()
 	this->initWindow();
 
 	this->initPlayer();
-
-	this->initEngines();
-
 	this->initEnemy();
+	this->initCombat();
 }
 
 //Destructors

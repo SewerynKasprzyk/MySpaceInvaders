@@ -7,8 +7,8 @@ class CombatEngine
 {
 	//Private variables
 	sf::Vector2u windowSize;
-	std::vector<Bullet*>* bullets;
-	std::vector<Enemy*>* enemies;
+	std::vector<Bullet*>& bullets;
+	std::vector<Enemy*>& enemies;
 	Player* player;
 	bool hold, hold_aproved, bullet_type;
 	int points;
@@ -32,7 +32,7 @@ public:
 	void enemyShoot();
 
 	//Constructor
-	CombatEngine(sf::Vector2u, std::vector<Bullet*>*, std::vector<Enemy*>*, Player*);
+	CombatEngine(sf::Vector2u, std::vector<Bullet*>&, std::vector<Enemy*>&, Player*);
 
 	//Destructor
 	virtual ~CombatEngine();

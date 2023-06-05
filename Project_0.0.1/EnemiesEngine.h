@@ -11,7 +11,7 @@ class EnemiesEngine
 	sf::Vector2u windowSize;
 	int textureChange, resetTimer;
 
-	std::vector<Enemy*>* enemies;
+	std::vector<Enemy*>& enemies;
 
 	//Resources
 	std::map<std::string, sf::Texture*> textures;
@@ -27,7 +27,7 @@ public:
 	void updateEnemies();
 
 	//Constructor
-	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>*);
+	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>&);
 
 	//Destructor
 	virtual ~EnemiesEngine();
