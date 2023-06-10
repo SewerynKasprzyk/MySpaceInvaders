@@ -13,8 +13,9 @@ class Enemy
 	sf::Sprite sprite;
 	sf::Texture* texture1;
 	sf::Texture* texture2;
+	bool isUfo, hitted;
 
-	int hp, hpMax, damage, points;
+	int hp, hpMax, damage, points, hitTimer;
 	static float movementSpeed;
 
 	//Private functions
@@ -28,13 +29,18 @@ public:
 	void update();
 	void render(sf::RenderTarget*);
 	void move(const float, const float);
+	void move(const float, const float, bool);
 	void damageEnemy(float);
+	void setUfo();
+	void hit(sf::Vector2f);
+	void hitRealease(sf::Vector2f);
 
 	//Accesors
 	const sf::FloatRect getBoundsHitbox() const;
 	const sf::FloatRect getBoundsSprite() const;
 	const int getHP() const;
 	const int getPoints() const;
+	const bool getIsUfo() const;
 	void setMovementSpeed(float);
 	void setTexture(bool);
 
