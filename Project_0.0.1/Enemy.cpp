@@ -12,6 +12,8 @@ void Enemy::initVariables()
 	this->points = 10;
 	this->movementSpeed = 1.f;
 	this->isUfo = false;
+	this->hitTimer = 0;
+	this->hitted = false;
 }
 
 void Enemy::initHitbox()
@@ -72,6 +74,33 @@ void Enemy::setUfo()
 {
 	this->isUfo = true;
 }
+
+void Enemy::hit(sf::Vector2f move)
+{
+	if (!this->hitted)
+	{
+		this->move(move.x, -move.y, true);
+	}
+
+	this->hitTimer = 10;
+	this->hitted = true;
+}
+
+void Enemy::hitRealease(sf::Vector2f move)
+{
+	if (this->hitted)
+	{
+		--hitTimer;
+		if (hitTimer <= 0)
+		{
+			//Release
+			this->move(move.x, move.y, true);
+			this->hitted = false;
+		}
+	}
+}
+
+
 
 
 //Accesors

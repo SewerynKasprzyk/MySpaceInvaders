@@ -83,11 +83,13 @@ void CombatEngine::BulletsEnemyHit()
 
 		for (auto* enemy : this->enemies)
 		{
-
+			//Enemy got hit
 			if (bullet->getBounds().intersects(enemy->getBoundsHitbox()) && bullet->isEnemyBullet() == false)
 			{
 				enemy->damageEnemy(bullet->getDamage());
+				enemy->hit(sf::Vector2f(0.f, this->windowSize.y * (1.f/100.f)));
 
+				//Enemy death
 				if (enemy->getHP() <= 0)
 				{
 					//Delete enemy and add points
@@ -108,6 +110,8 @@ void CombatEngine::BulletsEnemyHit()
 				return;
 			}
 
+			enemy->hitRealease(sf::Vector2f(0.f, this->windowSize.y * (1.f / 100.f)));
+
 			j++;
 		}
 
@@ -115,6 +119,7 @@ void CombatEngine::BulletsEnemyHit()
  		if (this->ufo != nullptr && (bullet->getBounds().intersects(this->ufo->getBoundsSprite()) && bullet->isEnemyBullet() == false))
 		{
 			this->ufo->damageEnemy(bullet->getDamage());
+			this->ufo->hit(sf::Vector2f(0.f, this->windowSize.y * (1.f / 100.f)));
 
 			if (this->ufo->getHP() <= 0)
 			{
@@ -133,6 +138,11 @@ void CombatEngine::BulletsEnemyHit()
 
 			//Same case as upper bug
 			return;
+		}
+
+		if (this->ufo != nullptr)
+		{
+			this->ufo->hitRealease(sf::Vector2f(0.f, this->windowSize.y * (1.f / 100.f)));
 		}
 
 		i++;

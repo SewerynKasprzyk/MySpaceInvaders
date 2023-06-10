@@ -5,7 +5,7 @@
 class EnemiesEngine
 {
 	//Private variables
-	unsigned int enemyCounter, enemiesInWave, speedCounter, textureChange, ufoTextureChange, resetTimer, ufoSpawnTimer;
+	unsigned int enemyCounter, enemiesInWave, speedCounter, textureChange, ufoTextureChange, resetTimer, ufoSpawnTimer, hitAnimationTimer;
 	int direction;
 	float movementSpeed;
 	sf::Vector2u windowSize;
