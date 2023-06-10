@@ -10,6 +10,7 @@ class CombatEngine
 	std::vector<Bullet*>& bullets;
 	std::vector<Enemy*>& enemies;
 	Player* player;
+	Enemy*& ufo;
 	bool hold, hold_aproved, bullet_type;
 	int points;
 	float readyToShoot;
@@ -32,7 +33,7 @@ public:
 	void enemyShoot();
 
 	//Constructor
-	CombatEngine(sf::Vector2u, std::vector<Bullet*>&, std::vector<Enemy*>&, Player*);
+	CombatEngine(sf::Vector2u, std::vector<Bullet*>&, std::vector<Enemy*>&, Player*, Enemy*&);
 
 	//Destructor
 	virtual ~CombatEngine();

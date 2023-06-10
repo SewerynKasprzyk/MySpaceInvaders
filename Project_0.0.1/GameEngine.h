@@ -40,6 +40,7 @@ class GameEngine
 
 	//Enemy
 	Enemy* enemy;
+	Enemy* ufo;
 
 	//private functions
 	void initVariables();
@@ -54,12 +55,12 @@ public:
 	void run();
 
 	void update();
-
 	void updatePollEvents();
 	void updateInput();
 	void updatePlayer();
 	void updateEnemy();
 	void updateCombat();
+
 	void render();
 
 	//Constructors

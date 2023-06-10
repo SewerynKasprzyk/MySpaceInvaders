@@ -25,13 +25,13 @@ void GameEngine::initPlayer()
 
 void GameEngine::initEnemy()
 {
-	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), this->enemies);
+	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), this->enemies, this->ufo);
 	this->enemiesEngine->initEnemies();
 }
 
 void GameEngine::initCombat()
 {
-	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player);
+	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo);
 }
 
 void GameEngine::run()
@@ -134,6 +134,11 @@ void GameEngine::render()
 		enemy->render(this->window);
 	}
 
+	if (this->ufo != nullptr)
+	{
+		this->ufo->render(this->window);
+	}
+
 	for (auto* bullet : this->bullets)
 	{
 		bullet->render(this->window);
@@ -166,6 +171,7 @@ GameEngine::~GameEngine()
 	}
 
 	delete this->enemy;
+	delete this->ufo;
 
 	for (auto* i : this->enemies)
 	{

@@ -40,8 +40,10 @@ void EnemiesEngine::initVariables()
 	this->movementSpeed = 0.08f;
 	this->enemiesInWave = 12;
 	this->textureChange = 0;
+	this->ufoTextureChange = 0;
 	this->direction = 1;
 	this->resetTimer = 0;
+	this->ufoSpawnTimer = 0;
 }
 
 void EnemiesEngine::initEnemies()
@@ -73,8 +75,21 @@ void EnemiesEngine::initEnemies()
 	this->enemies[0]->setMovementSpeed(this->movementSpeed);
 }
 
+void EnemiesEngine::SpawnUfo()
+{
+	unsigned width = this->windowSize.x, height = this->windowSize.y;
+	srand(time(NULL));
+
+	this->ufo = new Enemy(this->textures["UFO_1"], this->textures["UFO_2"], -(width * (2.f / 32.f)), height * (4.f / 36.f), this->movementSpeed, ((std::rand() % 9) + 1) * 10);
+	this->ufo->setUfo();
+
+	this->ufoSpawnTimer = 0;
+	this->ufoTextureChange = 0;
+}
+
 void EnemiesEngine::updateEnemies()
 {
+	//Enemy part
 	srand(time(NULL));
 
 	this->enemyCounter = this->enemies.size();
@@ -118,12 +133,18 @@ void EnemiesEngine::updateEnemies()
 		if (this->textureChange <= 100 && this->textureChange >= (std::rand() % 50) + 50)
 		{
 			enemy->setTexture(1);
+			
 		}
 
 		else if (this->textureChange >= (std::rand() % 50) + 150)
 		{
 			enemy->setTexture(0);
 		}	
+	}
+
+	if (this->ufo != nullptr)
+	{
+		this->ufoUpdate();
 	}
 
 
@@ -148,13 +169,47 @@ void EnemiesEngine::updateEnemies()
 		this->resetTimer = 0;
 	}
 
-
-	this->textureChange += 1 + 1 * 10 * this->movementSpeed;
 	//this->textureChange++;
+	this->textureChange += 1 + 1 * 10 * this->movementSpeed;
 
+	//Ufo enemy part
+	if (this->ufoSpawnTimer > ((std::rand() % 7000) + 3000) && this->ufo == nullptr)
+	{
+		this->SpawnUfo();
+		this->ufoSpawnTimer = 0;
+	}
+
+	if (this->ufo != nullptr)
+	{
+		if (this->ufoTextureChange == 50)
+		{
+			this->ufo->setTexture(1);
+		}
+
+		if (this->ufoTextureChange > 100)
+		{
+			this->ufo->setTexture(0);
+			this->ufoTextureChange = 0;
+		}
+	}
+
+	ufoSpawnTimer++;
+	ufoTextureChange++;
 }
 
-EnemiesEngine::EnemiesEngine(sf::Vector2u windowSize, std::vector<Enemy*> &enemies) : enemies(enemies)
+void EnemiesEngine::ufoUpdate()
+{
+	this->ufo->move(2.f, 0.f, true);
+
+	//Enemy culling
+	if (this->ufo->getBoundsSprite().left == windowSize.x)
+	{
+		delete this->ufo;
+		this->ufo = nullptr;
+	}
+}
+
+EnemiesEngine::EnemiesEngine(sf::Vector2u windowSize, std::vector<Enemy*> &enemies, Enemy*& ufo) : enemies(enemies), ufo(ufo)
 {
 	this->initVariables();
 	this->initTextures();

@@ -5,13 +5,12 @@
 class EnemiesEngine
 {
 	//Private variables
-	unsigned enemyCounter, enemiesInWave, speedCounter;
+	unsigned int enemyCounter, enemiesInWave, speedCounter, textureChange, ufoTextureChange, resetTimer, ufoSpawnTimer;
 	int direction;
 	float movementSpeed;
 	sf::Vector2u windowSize;
-	int textureChange, resetTimer;
-
 	std::vector<Enemy*>& enemies;
+	Enemy*& ufo;
 
 	//Resources
 	std::map<std::string, sf::Texture*> textures;
@@ -24,10 +23,12 @@ public:
 
 	//Public functions
 	void initEnemies();
+	void SpawnUfo();
 	void updateEnemies();
+	void ufoUpdate();
 
 	//Constructor
-	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>&);
+	EnemiesEngine(sf::Vector2u, std::vector<Enemy*>&, Enemy*&);
 
 	//Destructor
 	virtual ~EnemiesEngine();
