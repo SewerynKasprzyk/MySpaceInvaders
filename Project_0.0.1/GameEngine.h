@@ -40,6 +40,7 @@ class GameEngine
 
 	//Enemy
 	Enemy* enemy;
+	Enemy* ufo;
 
 	//private functions
 	void initVariables();

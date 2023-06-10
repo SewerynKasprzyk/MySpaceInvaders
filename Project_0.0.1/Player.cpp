@@ -6,8 +6,8 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->width = width;
 	this->height = height;
 	this->movementSpeed = 7.f;
-	this->bulletCdMultipler = 0.1f;
-	this->bulletCdMax = 100.f * bulletCdMultipler;
+	this->bulletCdMultipler = 3.f;
+	this->bulletCdMax = 100.f * (1.f/bulletCdMultipler);
 	this->bulletCd = this->bulletCdMax;
 	this->damage = 5.f;
 	this->damageMultipler = 1.f;

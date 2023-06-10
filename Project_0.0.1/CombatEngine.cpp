@@ -16,7 +16,7 @@ void CombatEngine::initTextures()
 
 	this->textures["BULLET_02"] = new sf::Texture();
 	this->textures["BULLET_02"]->loadFromFile(".\\Textures\\Laser_Sprites\\12.png");
-
+	
 	this->textures["ENEMY_BULLET_01"] = new sf::Texture();
 	this->textures["ENEMY_BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\35.png");
 }
@@ -77,13 +77,13 @@ void CombatEngine::BulletsCulling()
 void CombatEngine::BulletsEnemyHit()
 {
 	unsigned int i = 0;
-
-	for (auto* enemy : this->enemies)
+	for (auto* bullet : this->bullets)
 	{
 		unsigned int j = 0;
 
-		for (auto* bullet : this->bullets)
+		for (auto* enemy : this->enemies)
 		{
+
 			if (bullet->getBounds().intersects(enemy->getBoundsHitbox()) && bullet->isEnemyBullet() == false)
 			{
 				enemy->damageEnemy(bullet->getDamage());
@@ -92,8 +92,8 @@ void CombatEngine::BulletsEnemyHit()
 				{
 					//Delete enemy and add points
 					this->points += enemy->getPoints();
-					delete this->enemies.at(i);
-					this->enemies.erase(this->enemies.begin() + i);
+					delete this->enemies.at(j);
+					this->enemies.erase(this->enemies.begin() + j);
 
 					//Bug fix for going out of vector range
 					//break wont work becouse there are two vectors where data has been deleted
@@ -101,13 +101,38 @@ void CombatEngine::BulletsEnemyHit()
 				}
 
 				//Delete bullet
-				delete this->bullets.at(j);
-				this->bullets.erase(this->bullets.begin() + j);
+				delete this->bullets.at(i);
+				this->bullets.erase(this->bullets.begin() + i);
 
+				//Same case as upper bug
 				return;
 			}
 
 			j++;
+		}
+
+		//Ufo hit
+ 		if (this->ufo != nullptr && (bullet->getBounds().intersects(this->ufo->getBoundsSprite()) && bullet->isEnemyBullet() == false))
+		{
+			this->ufo->damageEnemy(bullet->getDamage());
+
+			if (this->ufo->getHP() <= 0)
+			{
+				//Add points and delete ufo
+				this->points += this->ufo->getPoints();
+				delete this->ufo;
+				this->ufo = nullptr;
+
+				//Same case as upper bug
+				return;
+			}
+
+			//Delete bullet
+			delete this->bullets.at(i);
+			this->bullets.erase(this->bullets.begin() + i);
+
+			//Same case as upper bug
+			return;
 		}
 
 		i++;
@@ -124,6 +149,9 @@ void CombatEngine::BulletsPlayerHit()
 		if (bullet->getBounds().intersects(this->player->getBounds()) && bullet->isEnemyBullet() == true)
 		{
 			this->player->damagePlayer(bullet->getDamage());
+
+			//TO DO PLAYER DEATH;
+
 			delete this->bullets.at(i);
 			this->bullets.erase(this->bullets.begin() + i);
 			return;
@@ -164,7 +192,7 @@ void CombatEngine::enemyShoot()
 	}
 }
 
-CombatEngine::CombatEngine(sf::Vector2u windowSize, std::vector<Bullet*>& bullets, std::vector<Enemy*>& enemies, Player* player) : bullets(bullets), enemies(enemies)
+CombatEngine::CombatEngine(sf::Vector2u windowSize, std::vector<Bullet*>& bullets, std::vector<Enemy*>& enemies, Player* player, Enemy*& ufo) : bullets(bullets), enemies(enemies), ufo(ufo)
 {
 	this->player = player;
 	this->initVariables();
