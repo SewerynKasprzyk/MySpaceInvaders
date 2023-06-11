@@ -15,6 +15,7 @@ class Player
 	unsigned width, height;
 	sf::Vector2u windowSize;
 	float hp, hpMax;
+	bool alive;
 
 	float movementSpeed, bulletCd, bulletCdMax, bulletCdMultipler, damage, damageMultipler, bulletSpeed, bulletSpeedMultipler;
 
@@ -32,12 +33,15 @@ public:
 	void render(sf::RenderTarget*);
 	void move(const float, const float);
 	void damagePlayer(float);
+	void killPlayer();
 
 	//Accessors
 	const sf::Vector2f getPos() const;
 	const sf::FloatRect getBounds() const;
 	float getDamage() const;
+	float getHP() const;
 	float getBulletSpeed() const;
+	const bool getState() const;
 
 	Player(unsigned, unsigned);
 	virtual ~Player();
