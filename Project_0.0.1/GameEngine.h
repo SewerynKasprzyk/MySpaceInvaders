@@ -4,9 +4,11 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Explosion.h"
+
 #include "PlayerEngine.h"
 #include "CombatEngine.h"
 #include "EnemiesEngine.h"
+#include "MenuEngine.h"
 
 #include <iostream>
 #include <map>
@@ -27,6 +29,7 @@ class GameEngine
 	unsigned* points;
 
 	//Helper engines
+	MenuEngine* menuEngine;
 	PlayerEngine* playerEngine;
 	CombatEngine* combatEngine;
 	EnemiesEngine* enemiesEngine;
@@ -51,6 +54,7 @@ class GameEngine
 	void initVariables();
 	void initWindow();
 
+	void initMenu();
 	void initPlayer();
 	void initEnemy();
 	void initCombat();

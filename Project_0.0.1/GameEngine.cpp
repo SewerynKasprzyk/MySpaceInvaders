@@ -17,6 +17,11 @@ void GameEngine::initWindow()
 	this->window->setVerticalSyncEnabled(false);
 }
 
+void GameEngine::initMenu()
+{
+	this->menuEngine = new MenuEngine(this->points, sf::Vector2f(this->window->getSize()));
+}
+
 void GameEngine::initPlayer()
 {
 	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
@@ -47,8 +52,8 @@ void GameEngine::run()
 void GameEngine::update()
 {
 	this->updatePollEvents();
-	this->updateGame();
-	//this->updateMenu();
+	//this->updateGame();
+	this->updateMenu();
 }
 
 void GameEngine::updatePollEvents()
@@ -145,6 +150,7 @@ void GameEngine::updateGame()
 
 void GameEngine::updateMenu()
 {
+	// TO DO ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void GameEngine::updateEnemy()
@@ -157,7 +163,7 @@ void GameEngine::render()
 {
 	this->window->clear();
 	
-	this->renderGame();
+	//this->renderGame();
 	this->renderMenu();
 
 	this->window->display();
@@ -192,6 +198,7 @@ void GameEngine::renderGame()
 
 void GameEngine::renderMenu()
 {
+	this->menuEngine->menuRender(this->window);
 }
 
 //Constructors
@@ -200,6 +207,7 @@ GameEngine::GameEngine()
 	this->initVariables();
 	this->initWindow();
 
+	this->initMenu();
 	this->initPlayer();
 	this->initEnemy();
 	this->initCombat();

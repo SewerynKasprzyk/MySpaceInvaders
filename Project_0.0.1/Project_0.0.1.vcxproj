@@ -138,6 +138,7 @@
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuEngine.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerEngine.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="MenuEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerEngine.h" />
   </ItemGroup>
