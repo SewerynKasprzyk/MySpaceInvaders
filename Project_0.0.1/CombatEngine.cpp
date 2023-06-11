@@ -270,6 +270,7 @@ void CombatEngine::playerDeathExplosionSequence()
 
 		//Create explosion
 		this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], puppet.getGlobalBounds()));
+		this->player->hidePlayer();
 	}
 
 }

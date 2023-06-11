@@ -101,8 +101,8 @@ void GameEngine::updateInput()
 
 void GameEngine::updatePlayer()
 {
-	this->playerEngine->update();
 	this->playerEngine->updateGUI();
+	this->playerEngine->update();
 }
 
 void GameEngine::updateCombat()
@@ -134,6 +134,11 @@ void GameEngine::updateGame()
 		this->updatePlayer();
 		this->updateEnemy();
 	}
+	else
+	{
+		//When player die still need to adjuste hpBar to 0;
+		this->playerEngine->updateGUI();
+	}
 
 	this->updateCombat();
 }
@@ -160,6 +165,7 @@ void GameEngine::render()
 
 void GameEngine::renderGame()
 {
+	this->playerEngine->renderGUI(this->window);
 
 	this->player->render(this->window);
 
@@ -177,8 +183,6 @@ void GameEngine::renderGame()
 	{
 		bullet->render(this->window);
 	}
-
-	this->playerEngine->renderGUI(this->window);
 
 	for (auto* explosion : this->explosions)
 	{
