@@ -16,6 +16,7 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->hpMax = 100.f;
 	this->hp = this->hpMax;
 	this->alive = true;
+	this->points = 0;
 }
 
 void Player::initTexture()
@@ -84,6 +85,11 @@ void Player::killPlayer()
 	this->alive = false;
 }
 
+void Player::addPoints(unsigned points)
+{
+	this->points += points;
+}
+
 //Accessors
 const sf::Vector2f Player::getPos() const
 {
@@ -105,6 +111,18 @@ float Player::getHP() const
 	return this->hp;
 }
 
+float Player::getHP(bool max) const
+{
+	if (max == true)
+	{
+		return this->hpMax;
+	}
+	else
+	{
+		return this->hp;
+	}
+}
+
 float Player::getBulletSpeed() const
 {
 	return this->bulletSpeed * this->bulletSpeedMultipler;
@@ -113,6 +131,11 @@ float Player::getBulletSpeed() const
 const bool Player::getState() const
 {
 	return this->alive;
+}
+
+const unsigned Player::getPoints() const
+{
+	return this->points;
 }
 
 

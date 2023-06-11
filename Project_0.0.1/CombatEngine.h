@@ -16,7 +16,7 @@ class CombatEngine
 	Player* player;
 	Enemy*& ufo;
 	bool hold, hold_aproved, bullet_type;
-	int points, sequenceTimer, sequenceTimerMax;
+	int sequenceTimer, sequenceTimerMax;
 	float readyToShoot;
 
 	//Resources

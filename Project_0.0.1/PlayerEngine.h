@@ -1,5 +1,7 @@
 #pragma once
 #include "Player.h"
+#include <string>
+#include <sstream>
 
 class PlayerEngine
 {
@@ -7,12 +9,19 @@ class PlayerEngine
 	Player*& player;
 	sf::Vector2u windowSize;
 
+	//GUI
+	sf::Font font;
+	sf::Text pointsText;
+
 public:
 
 	//Public functions
 	void Player_Input();
 	void update();
+	void updateGUI();
 	void initPlayer();
+	void initGUI();
+	void renderGUI(sf::RenderTarget*);
 
 	//Constructor
 	PlayerEngine(Player*&, sf::Vector2u);

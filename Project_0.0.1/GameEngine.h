@@ -24,6 +24,7 @@ class GameEngine
 	sf::RenderWindow* window;
 	unsigned width, height;
 	bool paused, pauseHold;
+	unsigned* points;
 
 	//Helper engines
 	PlayerEngine* playerEngine;
@@ -65,7 +66,12 @@ public:
 	void updateEnemy();
 	void updateCombat();
 
+	void updateGame();
+	void updateMenu();
+
 	void render();
+	void renderGame();
+	void renderMenu();
 
 	//Constructors
 	GameEngine();

@@ -21,6 +21,7 @@ void GameEngine::initPlayer()
 {
 	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
 	this->playerEngine->initPlayer();
+	this->playerEngine->initGUI();
 }
 
 void GameEngine::initEnemy()
@@ -46,15 +47,8 @@ void GameEngine::run()
 void GameEngine::update()
 {
 	this->updatePollEvents();
-	this->updateInput();
-
-	if (!this->paused && this->player->getState())
-	{
-		this->updatePlayer();
-		this->updateEnemy();
-	}
-
-	this->updateCombat();
+	this->updateGame();
+	//this->updateMenu();
 }
 
 void GameEngine::updatePollEvents()
@@ -97,6 +91,7 @@ void GameEngine::updateInput()
 	}
 
 	//Run engines functions for input
+	//Do if game isn't paused and player is alive
 	if (!this->paused && this->player->getState())
 	{
 		this->playerEngine->Player_Input();
@@ -107,11 +102,12 @@ void GameEngine::updateInput()
 void GameEngine::updatePlayer()
 {
 	this->playerEngine->update();
+	this->playerEngine->updateGUI();
 }
 
 void GameEngine::updateCombat()
 {
-
+	//Do if game isn't paused and player is alive
 	if ((!this->paused && this->player->getState()))
 	{
 		this->combatEngine->BulletsEnemyHit();
@@ -129,6 +125,23 @@ void GameEngine::updateCombat()
 	this->combatEngine->explosionsRelease();
 }
 
+void GameEngine::updateGame()
+{
+	this->updateInput();
+
+	if (!this->paused && this->player->getState())
+	{
+		this->updatePlayer();
+		this->updateEnemy();
+	}
+
+	this->updateCombat();
+}
+
+void GameEngine::updateMenu()
+{
+}
+
 void GameEngine::updateEnemy()
 {
 	this->enemiesEngine->updateEnemies();
@@ -138,6 +151,15 @@ void GameEngine::updateEnemy()
 void GameEngine::render()
 {
 	this->window->clear();
+	
+	this->renderGame();
+	this->renderMenu();
+
+	this->window->display();
+}
+
+void GameEngine::renderGame()
+{
 
 	this->player->render(this->window);
 
@@ -156,12 +178,16 @@ void GameEngine::render()
 		bullet->render(this->window);
 	}
 
+	this->playerEngine->renderGUI(this->window);
+
 	for (auto* explosion : this->explosions)
 	{
 		explosion->render(this->window);
 	}
+}
 
-	this->window->display();
+void GameEngine::renderMenu()
+{
 }
 
 //Constructors
@@ -194,6 +220,13 @@ GameEngine::~GameEngine()
 	{
 		delete i;
 	}
+
+	for (auto* i : this->explosions)
+	{
+		delete i;
+	}
+
+	delete this->points;
 
 	delete this->playerEngine;
 	delete this->combatEngine;

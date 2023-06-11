@@ -5,7 +5,6 @@ void CombatEngine::initVariables()
 	this->hold = false;
 	this->hold_aproved = false;
 	this->bullet_type = false;
-	this->points = 0;
 	this->readyToShoot = 0.f;
 	this->sequenceTimerMax = 100.f;
 	this->sequenceTimer = this->sequenceTimerMax;
@@ -107,7 +106,7 @@ void CombatEngine::BulletsEnemyHit()
 					this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], enemy->getBoundsSprite()));
 
 					//Delete enemy and add points
-					this->points += enemy->getPoints();
+					this->player->addPoints(enemy->getPoints());
 					delete this->enemies.at(j);
 					this->enemies.erase(this->enemies.begin() + j);
 
@@ -141,7 +140,7 @@ void CombatEngine::BulletsEnemyHit()
 				this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], this->ufo->getBoundsSprite()));
 
 				//Add points and delete ufo
-				this->points += this->ufo->getPoints();
+				this->player->addPoints(this->ufo->getPoints());
 				delete this->ufo;
 				this->ufo = nullptr;
 
