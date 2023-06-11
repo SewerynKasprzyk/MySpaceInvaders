@@ -7,6 +7,8 @@ void CombatEngine::initVariables()
 	this->bullet_type = false;
 	this->points = 0;
 	this->readyToShoot = 0.f;
+	this->sequenceTimerMax = 100.f;
+	this->sequenceTimer = this->sequenceTimerMax;
 }
 
 void CombatEngine::initTextures()
@@ -19,6 +21,15 @@ void CombatEngine::initTextures()
 	
 	this->textures["ENEMY_BULLET_01"] = new sf::Texture();
 	this->textures["ENEMY_BULLET_01"]->loadFromFile(".\\Textures\\Laser_Sprites\\35.png");
+
+	this->textures["EXPLOTA_01"] = new sf::Texture();
+	this->textures["EXPLOTA_01"]->loadFromFile(".\\Textures\\Explota_Sprites\\explota_1.png");
+
+	this->textures["EXPLOTA_02"] = new sf::Texture();
+	this->textures["EXPLOTA_02"]->loadFromFile(".\\Textures\\Explota_Sprites\\explota_2.png");
+
+	this->textures["EXPLOTA_03"] = new sf::Texture();
+	this->textures["EXPLOTA_03"]->loadFromFile(".\\Textures\\Explota_Sprites\\explota_3.png");
 }
 
 void CombatEngine::BulletsInput()
@@ -92,6 +103,9 @@ void CombatEngine::BulletsEnemyHit()
 				//Enemy death
 				if (enemy->getHP() <= 0)
 				{
+					//Create explosion
+					this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], enemy->getBoundsSprite()));
+
 					//Delete enemy and add points
 					this->points += enemy->getPoints();
 					delete this->enemies.at(j);
@@ -123,6 +137,9 @@ void CombatEngine::BulletsEnemyHit()
 
 			if (this->ufo->getHP() <= 0)
 			{
+				//Create explosion
+				this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], this->ufo->getBoundsSprite()));
+
 				//Add points and delete ufo
 				this->points += this->ufo->getPoints();
 				delete this->ufo;
@@ -160,7 +177,12 @@ void CombatEngine::BulletsPlayerHit()
 		{
 			this->player->damagePlayer(bullet->getDamage());
 
-			//TO DO PLAYER DEATH;
+			//TO DO PLAYER DEATH
+
+			if (this->player->getHP() <= 0)
+			{
+				this->player->killPlayer();
+			}
 
 			delete this->bullets.at(i);
 			this->bullets.erase(this->bullets.begin() + i);
@@ -202,7 +224,58 @@ void CombatEngine::enemyShoot()
 	}
 }
 
-CombatEngine::CombatEngine(sf::Vector2u windowSize, std::vector<Bullet*>& bullets, std::vector<Enemy*>& enemies, Player* player, Enemy*& ufo) : bullets(bullets), enemies(enemies), ufo(ufo)
+void CombatEngine::explosionsRelease()
+{
+	unsigned i = 0;
+
+	for (auto* explosion : this->explosions)
+	{
+		if (explosion->explosionRelease() == true)
+		{
+			delete this->explosions.at(i);
+			this->explosions.erase(this->explosions.begin() + i);
+			return;
+		}
+
+		i++;
+	}
+}
+
+void CombatEngine::playerDeathExplosionSequence()
+{
+	--this->sequenceTimer;
+	sf::RectangleShape puppet;
+
+	if (this->sequenceTimer == 99) 
+	{
+		puppet.setSize(sf::Vector2f(1.f, 1.f));
+		puppet.setPosition(this->player->getBounds().left + this->player->getBounds().width * (4.f / 10.f), this->player->getBounds().top + this->player->getBounds().height * (8.f / 10.f));
+
+		//Create explosion
+		this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], puppet.getGlobalBounds()));
+	}
+
+	if (this->sequenceTimer == 50)
+	{
+		puppet.setSize(sf::Vector2f(1.f, 1.f));
+		puppet.setPosition(this->player->getBounds().left + this->player->getBounds().width * (2.f / 10.f), this->player->getBounds().top + this->player->getBounds().height * (2.f / 10.f));
+
+		//Create explosion
+		this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], puppet.getGlobalBounds()));
+	}
+
+	if (this->sequenceTimer == 0)
+	{
+		puppet.setSize(sf::Vector2f(1.f, 1.f));
+		puppet.setPosition(this->player->getBounds().left + this->player->getBounds().width * (8.f / 10.f), this->player->getBounds().top + this->player->getBounds().height * (3.f / 10.f));
+
+		//Create explosion
+		this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], puppet.getGlobalBounds()));
+	}
+
+}
+
+CombatEngine::CombatEngine(sf::Vector2u windowSize, std::vector<Bullet*>& bullets, std::vector<Enemy*>& enemies, Player* player, Enemy*& ufo, std::vector<Explosion*>& explosions) : bullets(bullets), enemies(enemies), ufo(ufo), explosions(explosions)
 {
 	this->player = player;
 	this->initVariables();
