@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include "Explosion.h"
 #include "PlayerEngine.h"
 #include "CombatEngine.h"
 #include "EnemiesEngine.h"
@@ -34,6 +35,9 @@ class GameEngine
 
 	//Enemies vector
 	std::vector<Enemy*> enemies;
+
+	//Explosions vector
+	std::vector<Explosion*> explosions;
 
 	//Player
 	Player* player;

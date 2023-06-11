@@ -15,6 +15,7 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->bulletSpeedMultipler = 1.f;
 	this->hpMax = 100.f;
 	this->hp = this->hpMax;
+	this->alive = true;
 }
 
 void Player::initTexture()
@@ -53,7 +54,7 @@ void Player::updateBulletCd()
 
 const bool Player::readyToShoot()
 {
-	if (this->bulletCd >= this->bulletCdMax)
+	if (this->alive && this->bulletCd >= this->bulletCdMax)
 	{
 		this->bulletCd = 0.f;
 		return true;
@@ -78,6 +79,11 @@ void Player::damagePlayer(float damage)
 	this->hp -= damage;
 }
 
+void Player::killPlayer()
+{
+	this->alive = false;
+}
+
 //Accessors
 const sf::Vector2f Player::getPos() const
 {
@@ -94,10 +100,21 @@ float Player::getDamage() const
 	return this->damage * this->damageMultipler;
 }
 
+float Player::getHP() const
+{
+	return this->hp;
+}
+
 float Player::getBulletSpeed() const
 {
 	return this->bulletSpeed * this->bulletSpeedMultipler;
 }
+
+const bool Player::getState() const
+{
+	return this->alive;
+}
+
 
 Player::Player(unsigned posX, unsigned posY)
 {

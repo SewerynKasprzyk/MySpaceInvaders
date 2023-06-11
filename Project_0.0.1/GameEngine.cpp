@@ -31,7 +31,7 @@ void GameEngine::initEnemy()
 
 void GameEngine::initCombat()
 {
-	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo);
+	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo, this->explosions);
 }
 
 void GameEngine::run()
@@ -48,12 +48,13 @@ void GameEngine::update()
 	this->updatePollEvents();
 	this->updateInput();
 
-	if (!this->paused)
+	if (!this->paused && this->player->getState())
 	{
 		this->updatePlayer();
 		this->updateEnemy();
-		this->updateCombat();
 	}
+
+	this->updateCombat();
 }
 
 void GameEngine::updatePollEvents()
@@ -96,7 +97,7 @@ void GameEngine::updateInput()
 	}
 
 	//Run engines functions for input
-	if (!this->paused)
+	if (!this->paused && this->player->getState())
 	{
 		this->playerEngine->Player_Input();
 		this->combatEngine->BulletsInput();
@@ -110,11 +111,22 @@ void GameEngine::updatePlayer()
 
 void GameEngine::updateCombat()
 {
-	this->combatEngine->BulletsEnemyHit();
-	this->combatEngine->BulletsCulling();
-	this->combatEngine->BulletsPlayerHit();
-	this->combatEngine->enemyIntersectPlayer();
-	this->combatEngine->enemyShoot();
+
+	if ((!this->paused && this->player->getState()))
+	{
+		this->combatEngine->BulletsEnemyHit();
+		this->combatEngine->BulletsCulling();
+		this->combatEngine->BulletsPlayerHit();
+		this->combatEngine->enemyIntersectPlayer();
+		this->combatEngine->enemyShoot();
+	}
+	
+	if(this->player->getState() == false)
+	{
+		this->combatEngine->playerDeathExplosionSequence();
+	}
+
+	this->combatEngine->explosionsRelease();
 }
 
 void GameEngine::updateEnemy()
@@ -142,6 +154,11 @@ void GameEngine::render()
 	for (auto* bullet : this->bullets)
 	{
 		bullet->render(this->window);
+	}
+
+	for (auto* explosion : this->explosions)
+	{
+		explosion->render(this->window);
 	}
 
 	this->window->display();
