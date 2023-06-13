@@ -138,6 +138,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameOverEngine.cpp" />
     <ClCompile Include="HiScore.cpp" />
     <ClCompile Include="HiScoreEngine.cpp" />
     <ClCompile Include="main.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameOverEngine.h" />
     <ClInclude Include="HiScore.h" />
     <ClInclude Include="HiScoreEngine.h" />
     <ClInclude Include="MenuEngine.h" />
