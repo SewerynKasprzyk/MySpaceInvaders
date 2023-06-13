@@ -28,7 +28,7 @@ class GameEngine
 	sf::RenderWindow* window;
 	unsigned width, height;
 	bool paused, pauseHold;
-	bool UserRunGame, userInMenu, UserInHiScore;
+	bool UserRunGame, userInMenu, UserInHiScore, UserInGameOver;
 	bool deathExplosionEnded;
 	unsigned* points;
 
@@ -65,6 +65,7 @@ class GameEngine
 	void initEnemy();
 	void initCombat();
 	void restartInit();
+	void gameOverSequence();
 
 public:
 	//Public Functions

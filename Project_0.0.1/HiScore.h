@@ -27,9 +27,7 @@ public:
 
 	//Public functions
 	void move(const float, const float);
-
-	//Overload
-	friend std::ostream& operator<<(std::ostream& output, const HiScore& hiScore);
+	void render(sf::RenderTarget*);
 
 	//Constructor
 	HiScore(unsigned int, std::string, sf::Vector2f, sf::Vector2f);

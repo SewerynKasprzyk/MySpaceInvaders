@@ -26,10 +26,10 @@ void HiScore::move(const float movX, const float movY)
 	this->scoreText.move(movX, movY);
 }
 
-std::ostream& operator<<(std::ostream& output, const HiScore& hiScore)
+void HiScore::render(sf::RenderTarget* target)
 {
-	output << hiScore.name << "|" << hiScore.score << std::endl;
-	return output;
+	target->draw(this->nameText);
+	target->draw(this->scoreText);
 }
 
 HiScore::HiScore(unsigned int score, std::string name, sf::Vector2f namePosition, sf::Vector2f scorePosition)

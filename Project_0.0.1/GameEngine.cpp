@@ -13,6 +13,7 @@ void GameEngine::initVariables()
 	this->userInMenu = true;
 	this->UserRunGame = false;
 	this->UserInHiScore = false;
+	this->UserInGameOver = false;
 
 	this->deathExplosionEnded = false;
 
@@ -164,7 +165,10 @@ void GameEngine::updateCombat()
 	
 	if(this->player->getState() == false)
 	{
-		this->combatEngine->playerDeathExplosionSequence();
+		if (this->combatEngine->playerDeathExplosionSequence())
+		{
+			this->UserInGameOver = true;
+		}
 	}
 
 	this->combatEngine->explosionsRelease();
@@ -173,6 +177,24 @@ void GameEngine::updateCombat()
 void GameEngine::updateGame()
 {
 	this->updateInput();
+
+	if (this->UserInGameOver)
+	{
+		this->gameOverSequence();
+
+		this->initVariables();
+
+		this->initMenu();
+		this->initHiScore();
+		this->initPlayer();
+		this->initEnemy();
+		this->initCombat();
+
+		this->UserInGameOver = false;
+		this->UserInHiScore = true;
+		this->userInMenu = false;
+		this->UserRunGame = false;
+	}
 
 	if (!this->paused && this->player->getState())
 	{
@@ -223,20 +245,8 @@ void GameEngine::updateHiScore()
 {
 	this->hiScoreEngine->updateHiScore();
 
-	//Export Decision
-
-	// TO DO ////////////////////////////////////////////////////////////////////////////////////
-	if (this->hiScoreEngine->getDecision(0))
-	{
-		this->UserRunGame = false;
-		this->UserInHiScore = false;
-		this->userInMenu = true;
-	 
-		this->initHiScore();
-	}
-
 	//back decision
-	if (this->hiScoreEngine->getDecision(1))
+	if (this->hiScoreEngine->getDecision(2))
 	{
 		this->UserRunGame = false;
 		this->UserInHiScore = false;
