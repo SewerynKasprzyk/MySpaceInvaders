@@ -140,6 +140,8 @@
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameOverEngine.cpp" />
     <ClCompile Include="HiScore.cpp" />
+    <ClCompile Include="HiScoreDB.cpp" />
+    <ClCompile Include="HiScoreDbElement.cpp" />
     <ClCompile Include="HiScoreEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuEngine.cpp" />
@@ -168,6 +170,8 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameOverEngine.h" />
     <ClInclude Include="HiScore.h" />
+    <ClInclude Include="HiScoreDB.h" />
+    <ClInclude Include="HiScoreDbElement.h" />
     <ClInclude Include="HiScoreEngine.h" />
     <ClInclude Include="MenuEngine.h" />
     <ClInclude Include="Player.h" />
