@@ -5,12 +5,12 @@ void HiScoreEngine::initVariables()
 {
 	this->cursorPointerPosition = 0;
 	this->holdW = true;
-	this->holdE = true;
+	this->holdS = true;
 	this->holdConfirm = true;
 
-	this->exportDecision = false;
 	this->backDecision = false;
 	this->points = 0;
+	this->visibleScores = 0;
 }
 
 void HiScoreEngine::initTextures()
@@ -49,17 +49,38 @@ void HiScoreEngine::initFont()
 
 void HiScoreEngine::initText()
 {
-	this->exportText.setFont(this->font);
-	this->exportText.setCharacterSize(22);
-	this->exportText.setFillColor(sf::Color::White);
+	this->backText.setFont(this->font);
+	this->backText.setCharacterSize(22);
+	this->backText.setFillColor(sf::Color::White);
 
-	this->backText = this->exportText;
+	this->upText = this->backText;
+	this->downText = this->backText;
 
-	this->exportText.setString("EXPORT");
+	this->upText.setString("U P");
+	this->downText.setString("D O W N");
 	this->backText.setString("B A C K");
 
-	this->exportText.setPosition(windowSize.x * (3.f / 32.f), windowSize.y * (14.f / 36.f));
-	this->backText.setPosition(windowSize.x * (3.f / 32.f), windowSize.y * (17.f / 36.f)); 
+	this->upText.setPosition(windowSize.x * (3.f / 32.f), windowSize.y * (14.f / 36.f));
+	this->downText.setPosition(windowSize.x * (3.f / 32.f), windowSize.y * (17.f / 36.f));
+	this->backText.setPosition(windowSize.x * (3.f / 32.f), windowSize.y * (20.f / 36.f));
+}
+
+void HiScoreEngine::initScores()
+{
+	HiScoreDB db;
+
+	this->hiScores = {};
+
+	float i = 0;
+
+	for (auto& element : db.getVector())
+	{
+		std::stringstream posName;
+
+		posName << i + 1 << ". " << element.name;
+		this->hiScores.push_back(new HiScore(element.score, posName.str(), sf::Vector2f(this->windowSize.x * (8.f / 32.f), this->windowSize.y * ((6.f + i) / 18.f)), sf::Vector2f(this->windowSize.x * (14.f / 32.f), this->windowSize.y * ((6.f + i) / 18.f))));
+		i = i + 1.f;
+	}
 }
 
 void HiScoreEngine::setPointer(int option)
@@ -67,22 +88,27 @@ void HiScoreEngine::setPointer(int option)
 	switch (option)
 	{
 	case 0:
-		this->pointer.setPosition(this->exportText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->exportText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
+		this->pointer.setPosition(this->upText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->upText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
 		break;
 
 	case 1:
+		this->pointer.setPosition(this->downText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->downText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
+		break;
+
+	case 2:
 		this->pointer.setPosition(this->backText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->backText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
 		break;
 
 	default:
-		this->pointer.setPosition(this->exportText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->exportText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
+		this->pointer.setPosition(this->upText.getGlobalBounds().left - this->pointer.getGlobalBounds().width * 1.2f, this->upText.getGlobalBounds().top - this->pointer.getGlobalBounds().height / 4.f);
 		break;
 	}
 }
 
 void HiScoreEngine::colorizeOption(int option)
 {
-	this->exportText.setFillColor(sf::Color::White);
+	this->upText.setFillColor(sf::Color::White);
+	this->downText.setFillColor(sf::Color::White);
 	this->backText.setFillColor(sf::Color::White);
 
 	sf::Color greeny = sf::Color(122, 224, 124, 255);
@@ -90,10 +116,14 @@ void HiScoreEngine::colorizeOption(int option)
 	switch (option)
 	{
 	case 0:
-		this->exportText.setFillColor(greeny);
+		this->upText.setFillColor(greeny);
 		break;
 
 	case 1:
+		this->downText.setFillColor(greeny);
+		break;
+
+	case 2:
 		this->backText.setFillColor(greeny);
 		break;
 	}
@@ -101,15 +131,65 @@ void HiScoreEngine::colorizeOption(int option)
 
 void HiScoreEngine::setDecision(int decision)
 {
+	/// <summary>
+	/// /////////// TO DO
+	/// </summary>
+	/// <param name="decision"></param>
+
 	switch (decision)
 	{
 	case 0:
-		this->exportDecision = true;
+		this->moveUpDown(true);
 		break;
 
 	case 1:
+		this->moveUpDown(false);
+		break;
+
+	case 2:
 		this->backDecision = true;
 		break;
+	}
+}
+
+void HiScoreEngine::moveUpDown(bool moveUpDown)
+{
+	if (moveUpDown)
+	{
+		float move = 9.f;
+
+		if (this->visibleScores - 9 < 0)
+		{
+			move = this->visibleScores;
+			this->visibleScores = 0;
+		}
+		else
+		{
+			this->visibleScores -= 9;
+		}
+
+		for (auto& hiScore : this->hiScores)
+		{
+			hiScore->move(0.f, this->windowSize.y * (move / 18.f));
+		}
+	}
+	else
+	{
+		float move = 9.f;
+
+		if (this->visibleScores + 9 > this->hiScores.size())
+		{
+			move = 0.f;
+		}
+		else
+		{
+			this->visibleScores += 9;
+		}
+
+		for (auto& hiScore : this->hiScores)
+		{
+			hiScore->move(0.f, -this->windowSize.y * (move / 18.f));
+		}
 	}
 }
 
@@ -120,6 +200,7 @@ void HiScoreEngine::initHiScore()
 	this->initText();
 	this->initTextures();
 	this->initSprites();
+	this->initScores();
 }
 
 
@@ -141,29 +222,29 @@ void HiScoreEngine::updateHiScore()
 	}
 	else
 	{
-		holdW = false;
+		this->holdW = false;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 	{
-		if (!this->holdE)
+		if (!this->holdS)
 		{
-			if (this->cursorPointerPosition != 1)
+			if (this->cursorPointerPosition != 2)
 			{
 				++this->cursorPointerPosition;
 			}
 
 			this->setPointer(this->cursorPointerPosition);
 			this->colorizeOption(this->cursorPointerPosition);
-			this->holdE = true;
+			this->holdS = true;
 		}
 	}
 	else
 	{
-		this->holdE = false;
+		this->holdS = false;
 	}
 
-	if (this->exportText.getGlobalBounds().contains(this->getMousePos()))
+	if (this->upText.getGlobalBounds().contains(this->getMousePos()))
 	{
 		this->cursorPointerPosition = 0;
 
@@ -171,9 +252,17 @@ void HiScoreEngine::updateHiScore()
 		this->colorizeOption(this->cursorPointerPosition);
 	}
 
-	if (this->backText.getGlobalBounds().contains(this->getMousePos()))
+	if (this->downText.getGlobalBounds().contains(this->getMousePos()))
 	{
 		this->cursorPointerPosition = 1;
+
+		this->setPointer(this->cursorPointerPosition);
+		this->colorizeOption(this->cursorPointerPosition);
+	}
+
+	if (this->backText.getGlobalBounds().contains(this->getMousePos()))
+	{
+		this->cursorPointerPosition = 2;
 
 		this->setPointer(this->cursorPointerPosition);
 		this->colorizeOption(this->cursorPointerPosition);
@@ -198,8 +287,27 @@ void HiScoreEngine::hiScoreRender(sf::RenderTarget* target)
 	target->draw(this->background);
 	target->draw(this->pointer);
 
-	target->draw(this->exportText);
+	target->draw(this->upText);
+	target->draw(this->downText);
 	target->draw(this->backText);
+
+	//for (auto& hiScore : this->hiScores)
+	//{
+	//	hiScore->render(target);
+	//}
+
+	if (this->hiScores.size() != 0)
+	{
+		for (int i = this->visibleScores; i < 9 + this->visibleScores; i++)
+		{
+			this->hiScores[i]->render(target);
+
+			if (i >= this->hiScores.size() - 1)
+			{
+				break;
+			}
+		}
+	}
 }
 
 const sf::Vector2f HiScoreEngine::getMousePos() const
@@ -212,15 +320,10 @@ const bool HiScoreEngine::getDecision(int decision) const
 {
 	switch (decision)
 	{
-	case 0:
-		return this->exportDecision;
-		break;
-
-	case 1:
+	case 2:
 		return this->backDecision;
 		break;
 	}
-
 }
 
 HiScoreEngine::HiScoreEngine(sf::Vector2f windowSize, sf::RenderWindow* window)

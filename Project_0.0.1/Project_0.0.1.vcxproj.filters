@@ -22,18 +22,21 @@
     <Filter Include="Pliki nagłówkowe\Engine">
       <UniqueIdentifier>{e86d2fbb-fce2-4135-8795-fa5fa7f79908}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\Database">
+      <UniqueIdentifier>{2b8a44d7-5573-4dc0-b122-1d8718d299cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Database">
+      <UniqueIdentifier>{cac5056b-bf4e-485f-b11d-4673ee78af2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Resources">
+      <UniqueIdentifier>{42b30a50-6c1b-4668-aa1c-1406c4a809ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Resources">
+      <UniqueIdentifier>{a29d3889-9363-40b1-81af-caa67a1b1d1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="CombatEngine.cpp">
@@ -48,17 +51,32 @@
     <ClCompile Include="PlayerEngine.cpp">
       <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Explosion.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="MenuEngine.cpp">
       <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="HiScore.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="HiScoreEngine.cpp">
       <Filter>Pliki źródłowe\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="HiScoreDbElement.cpp">
+      <Filter>Pliki źródłowe\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="HiScoreDB.cpp">
+      <Filter>Pliki źródłowe\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="HiScore.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,15 +115,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="CombatEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
@@ -118,17 +127,32 @@
     <ClInclude Include="PlayerEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Explosion.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="MenuEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="HiScore.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="HiScoreEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="HiScoreDB.h">
+      <Filter>Pliki nagłówkowe\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="HiScoreDbElement.h">
+      <Filter>Pliki nagłówkowe\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="HiScore.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
