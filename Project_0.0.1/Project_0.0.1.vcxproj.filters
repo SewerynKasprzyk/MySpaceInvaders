@@ -78,6 +78,29 @@
     <ClCompile Include="Player.cpp">
       <Filter>Pliki źródłowe\Resources</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="HiScoreDbElement.cpp">
+      <Filter>Pliki źródłowe\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="HiScoreDB.cpp">
+      <Filter>Pliki źródłowe\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="HiScore.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Pliki źródłowe\Resources</Filter>
+    </ClCompile>
     <ClCompile Include="GameOverEngine.cpp">
       <Filter>Pliki źródłowe\Engine</Filter>
     </ClCompile>
@@ -136,6 +159,29 @@
     <ClInclude Include="HiScoreEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="HiScoreDB.h">
+      <Filter>Pliki nagłówkowe\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="HiScoreDbElement.h">
+      <Filter>Pliki nagłówkowe\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="HiScore.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Pliki nagłówkowe\Resources</Filter>
+    </ClInclude>
+<<<<<<< Updated upstream
+=======
     <ClInclude Include="HiScoreDB.h">
       <Filter>Pliki nagłówkowe\Database</Filter>
     </ClInclude>
