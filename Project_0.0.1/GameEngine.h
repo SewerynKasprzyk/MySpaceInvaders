@@ -4,9 +4,13 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Explosion.h"
+#include "HiScore.h"
+
 #include "PlayerEngine.h"
 #include "CombatEngine.h"
 #include "EnemiesEngine.h"
+#include "MenuEngine.h"
+#include "HiScoreEngine.h"
 
 #include <iostream>
 #include <map>
@@ -24,9 +28,13 @@ class GameEngine
 	sf::RenderWindow* window;
 	unsigned width, height;
 	bool paused, pauseHold;
+	bool UserRunGame, userInMenu, UserInHiScore;
+	bool deathExplosionEnded;
 	unsigned* points;
 
 	//Helper engines
+	MenuEngine* menuEngine;
+	HiScoreEngine* hiScoreEngine;
 	PlayerEngine* playerEngine;
 	CombatEngine* combatEngine;
 	EnemiesEngine* enemiesEngine;
@@ -51,9 +59,12 @@ class GameEngine
 	void initVariables();
 	void initWindow();
 
+	void initMenu();
+	void initHiScore();
 	void initPlayer();
 	void initEnemy();
 	void initCombat();
+	void restartInit();
 
 public:
 	//Public Functions
@@ -68,10 +79,12 @@ public:
 
 	void updateGame();
 	void updateMenu();
+	void updateHiScore();
 
 	void render();
 	void renderGame();
 	void renderMenu();
+	void renderHiScore();
 
 	//Constructors
 	GameEngine();

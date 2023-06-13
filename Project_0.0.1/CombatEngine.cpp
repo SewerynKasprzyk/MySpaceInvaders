@@ -1,8 +1,9 @@
+#pragma once
 #include "CombatEngine.h"
 
 void CombatEngine::initVariables()
 {
-	this->hold = false;
+	this->hold = true;
 	this->hold_aproved = false;
 	this->bullet_type = false;
 	this->readyToShoot = 0.f;
@@ -176,8 +177,6 @@ void CombatEngine::BulletsPlayerHit()
 		{
 			this->player->damagePlayer(bullet->getDamage());
 
-			//TO DO PLAYER DEATH
-
 			if (this->player->getHP() <= 0)
 			{
 				this->player->killPlayer();
@@ -201,6 +200,15 @@ void CombatEngine::enemyIntersectPlayer()
 		if (enemy->getBoundsHitbox().intersects(this->player->getBounds()))
 		{
 			this->player->damagePlayer(enemy->getHP());
+
+			//Create explosion
+			this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], enemy->getBoundsSprite()));
+
+			if (this->player->getHP() <= 0)
+			{
+				this->player->killPlayer();
+			}
+
 			delete this->enemies.at(i);
 			this->enemies.erase(this->enemies.begin() + i);
 			return;
@@ -240,7 +248,7 @@ void CombatEngine::explosionsRelease()
 	}
 }
 
-void CombatEngine::playerDeathExplosionSequence()
+bool CombatEngine::playerDeathExplosionSequence()
 {
 	--this->sequenceTimer;
 	sf::RectangleShape puppet;
@@ -270,7 +278,11 @@ void CombatEngine::playerDeathExplosionSequence()
 
 		//Create explosion
 		this->explosions.push_back(new Explosion(this->textures["EXPLOTA_01"], this->textures["EXPLOTA_02"], this->textures["EXPLOTA_03"], puppet.getGlobalBounds()));
+		this->player->hidePlayer();
+		return true;
 	}
+
+	return false;
 
 }
 

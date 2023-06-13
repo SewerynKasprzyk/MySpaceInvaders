@@ -1,3 +1,4 @@
+#pragma once
 #include "Player.h"
 
 //Private functions
@@ -36,7 +37,7 @@ void Player::initSprite()
 	//Resize the sprite
 	this->sprite.scale(0.075f, 0.075f);
 
-	this->sprite.setPosition(((this->width/2.f) - 50), (this->height - 100.f));
+	this->sprite.setPosition(((this->width/2.f) - 50.f), (this->height - 100.f));
 }
 
 //Public functions
@@ -90,6 +91,11 @@ void Player::addPoints(unsigned points)
 	this->points += points;
 }
 
+void Player::hidePlayer()
+{
+	this->sprite.setPosition(this->windowSize.x, this->windowSize.y);
+}
+
 //Accessors
 const sf::Vector2f Player::getPos() const
 {
@@ -139,8 +145,9 @@ const unsigned Player::getPoints() const
 }
 
 
-Player::Player(unsigned posX, unsigned posY)
+Player::Player(unsigned posX, unsigned posY, sf::Vector2f  windowSize)
 {
+	this->windowSize = windowSize;
 	this->initVariables(posX, posY);
 	this->initTexture();
 	this->initSprite();

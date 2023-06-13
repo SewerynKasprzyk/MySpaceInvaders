@@ -12,6 +12,7 @@ class PlayerEngine
 	//GUI
 	sf::Font font;
 	sf::Text pointsText;
+	sf::RectangleShape hpBar, hpBarBack;
 
 public:
 

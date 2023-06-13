@@ -36,7 +36,7 @@ public:
 	void enemyIntersectPlayer();
 	void enemyShoot();
 	void explosionsRelease();
-	void playerDeathExplosionSequence();
+	bool playerDeathExplosionSequence();
 
 	//Constructor
 	CombatEngine(sf::Vector2u, std::vector<Bullet*>&, std::vector<Enemy*>&, Player*, Enemy*&, std::vector<Explosion*>&);

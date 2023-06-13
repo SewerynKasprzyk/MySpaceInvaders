@@ -13,7 +13,7 @@ class Player
 	sf::Sprite sprite;
 	sf::Texture texture;
 	unsigned width, height, points;
-	sf::Vector2u windowSize;
+	sf::Vector2f windowSize;
 	float hp, hpMax;
 	bool alive;
 
@@ -35,6 +35,7 @@ public:
 	void damagePlayer(float);
 	void killPlayer();
 	void addPoints(unsigned);
+	void hidePlayer();
 
 	//Accessors
 	const sf::Vector2f getPos() const;
@@ -46,7 +47,7 @@ public:
 	const bool getState() const;
 	const unsigned getPoints() const;
 
-	Player(unsigned, unsigned);
+	Player(unsigned, unsigned, sf::Vector2f);
 	virtual ~Player();
 };
 
