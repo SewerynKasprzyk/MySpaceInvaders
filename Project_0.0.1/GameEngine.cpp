@@ -1,3 +1,4 @@
+#pragma once
 #include "GameEngine.h"
 
 //Private functions
@@ -6,7 +7,18 @@ void GameEngine::initVariables()
 	this->width = 960;
 	this->height = 540;
 	this->paused = false;
-	this->pauseHold = false;
+	this->pauseHold = true;
+	this->points = 0;
+
+	this->userInMenu = true;
+	this->UserRunGame = false;
+	this->UserInHiScore = false;
+
+	this->deathExplosionEnded = false;
+
+	this->enemies = {};
+	this->bullets = {};
+	this->explosions = {};
 }
 
 void GameEngine::initWindow()
@@ -19,7 +31,13 @@ void GameEngine::initWindow()
 
 void GameEngine::initMenu()
 {
-	this->menuEngine = new MenuEngine(this->points, sf::Vector2f(this->window->getSize()));
+	this->menuEngine = new MenuEngine(this->points, sf::Vector2f(this->window->getSize()), this->window);
+}
+
+void GameEngine::initHiScore()
+{
+	this->hiScoreEngine = new HiScoreEngine(sf::Vector2f(this->window->getSize()), this->window);
+	this->hiScoreEngine->initHiScore();
 }
 
 void GameEngine::initPlayer()
@@ -40,6 +58,15 @@ void GameEngine::initCombat()
 	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo, this->explosions);
 }
 
+void GameEngine::restartInit()
+{
+	this->initMenu();
+	this->initHiScore();
+	this->initPlayer();
+	this->initEnemy();
+	this->initCombat();
+}
+
 void GameEngine::run()
 {
 	while (this->window->isOpen())
@@ -52,8 +79,21 @@ void GameEngine::run()
 void GameEngine::update()
 {
 	this->updatePollEvents();
-	//this->updateGame();
-	this->updateMenu();
+
+	if (this->UserRunGame)
+	{
+		this->updateGame();
+	}
+
+	if (this->userInMenu)
+	{
+		this->updateMenu();
+	}
+
+	if (this->UserInHiScore)
+	{
+		this->updateHiScore();
+	}
 }
 
 void GameEngine::updatePollEvents()
@@ -150,7 +190,60 @@ void GameEngine::updateGame()
 
 void GameEngine::updateMenu()
 {
-	// TO DO ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this->menuEngine->updateMenu();
+
+	//Play decision
+	if (this->menuEngine->getDecision(0))
+	{
+		this->UserRunGame = true;
+		this->UserInHiScore = false;
+		this->userInMenu = false;
+
+		this->initMenu();
+	}
+
+	//Hi-Score decision
+	if(this->menuEngine->getDecision(1))
+	{
+		this->UserRunGame = false;
+		this->UserInHiScore = true;
+		this->userInMenu = false;
+
+		this->initMenu();
+	}
+
+	//Quit decision
+	if (this->menuEngine->getDecision(2))
+	{
+		this->window->close();
+	}
+}
+
+void GameEngine::updateHiScore()
+{
+	this->hiScoreEngine->updateHiScore();
+
+	//Export Decision
+
+	// TO DO ////////////////////////////////////////////////////////////////////////////////////
+	if (this->hiScoreEngine->getDecision(0))
+	{
+		this->UserRunGame = false;
+		this->UserInHiScore = false;
+		this->userInMenu = true;
+	 
+		this->initHiScore();
+	}
+
+	//back decision
+	if (this->hiScoreEngine->getDecision(1))
+	{
+		this->UserRunGame = false;
+		this->UserInHiScore = false;
+		this->userInMenu = true;
+
+		this->initHiScore();
+	}
 }
 
 void GameEngine::updateEnemy()
@@ -163,8 +256,20 @@ void GameEngine::render()
 {
 	this->window->clear();
 	
-	//this->renderGame();
-	this->renderMenu();
+	if (this->UserRunGame)
+	{
+		this->renderGame();
+	}
+
+	if (this->userInMenu)
+	{
+		this->renderMenu();
+	}
+
+	if (this->UserInHiScore)
+	{
+		this->renderHiScore();
+	}
 
 	this->window->display();
 }
@@ -201,6 +306,11 @@ void GameEngine::renderMenu()
 	this->menuEngine->menuRender(this->window);
 }
 
+void GameEngine::renderHiScore()
+{
+	this->hiScoreEngine->hiScoreRender(this->window);
+}
+
 //Constructors
 GameEngine::GameEngine()
 {
@@ -208,6 +318,7 @@ GameEngine::GameEngine()
 	this->initWindow();
 
 	this->initMenu();
+	this->initHiScore();
 	this->initPlayer();
 	this->initEnemy();
 	this->initCombat();
@@ -243,4 +354,6 @@ GameEngine::~GameEngine()
 	delete this->playerEngine;
 	delete this->combatEngine;
 	delete this->enemiesEngine;
+	delete this->menuEngine;
+	delete this->hiScoreEngine;
 }

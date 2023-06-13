@@ -1,3 +1,4 @@
+#pragma once
 #include "PlayerEngine.h"
 
 //Public functions

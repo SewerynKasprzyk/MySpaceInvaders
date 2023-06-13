@@ -16,6 +16,9 @@ class MenuEngine
 	unsigned cursorPointerPosition;
 	sf::Vector2f windowSize;
 	std::map<std::string, sf::Texture*> textures;
+	bool holdW, holdE, holdConfirm;
+	bool playDecision, hiScoreDecision, quitDecision;
+	sf::RenderWindow* window;
 
 	sf::Font font;
 	sf::Text play, hiScore, quit;
@@ -29,6 +32,9 @@ class MenuEngine
 	void initTextures();
 	void initSprites();
 	void setPointer(int);
+	void colorizeOption(int);
+	void setDecision(int);
+
 
 public:
 
@@ -37,8 +43,12 @@ public:
 	void updateMenu();
 	void menuRender(sf::RenderTarget*);
 
+	//Accesors
+	const sf::Vector2f getMousePos() const;
+	const bool getDecision(int) const;
+
 	//Constructor
-	MenuEngine(unsigned*&, sf::Vector2f);
+	MenuEngine(unsigned*&, sf::Vector2f, sf::RenderWindow*);
 
 	//Destructor
 	virtual ~MenuEngine();

@@ -1,3 +1,4 @@
+#pragma once
 #include "Explosion.h"
 
 void Explosion::initVariables()

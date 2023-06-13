@@ -1,3 +1,4 @@
+#pragma once
 #include "EnemiesEngine.h"
 
 void EnemiesEngine::initTextures()
