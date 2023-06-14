@@ -158,7 +158,7 @@
       <Filter>Pliki nagłówkowe\Resources</Filter>
     </ClInclude>
     <ClInclude Include="GameOverEngine.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
