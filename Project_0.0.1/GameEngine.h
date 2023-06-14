@@ -5,12 +5,15 @@
 #include "Enemy.h"
 #include "Explosion.h"
 #include "HiScore.h"
+#include "HiScoreDbElement.h"
 
 #include "PlayerEngine.h"
 #include "CombatEngine.h"
 #include "EnemiesEngine.h"
 #include "MenuEngine.h"
 #include "HiScoreEngine.h"
+#include "GameOverEngine.h"
+#include "HiScoreDB.h"
 
 #include <iostream>
 #include <map>
@@ -34,9 +37,11 @@ class GameEngine
 
 	//Helper engines
 	MenuEngine* menuEngine;
-	HiScoreEngine* hiScoreEngine;	PlayerEngine* playerEngine;
+	HiScoreEngine* hiScoreEngine;	
+	PlayerEngine* playerEngine;
 	CombatEngine* combatEngine;
 	EnemiesEngine* enemiesEngine;
+	GameOverEngine* gameOverEngine;
 
 	//Bullets vector
 	std::vector<Bullet*> bullets;
@@ -63,8 +68,9 @@ class GameEngine
 	void initPlayer();
 	void initEnemy();
 	void initCombat();
+	void initGameOver();
 	void restartInit();
-	//void gameOverSequence();
+
 
 public:
 	//Public Functions
@@ -80,11 +86,13 @@ public:
 	void updateGame();
 	void updateMenu();
 	void updateHiScore();
+	void updateGameOver();
 
 	void render();
 	void renderGame();
 	void renderMenu();
 	void renderHiScore();
+	void renderGameOver();
 
 	//Constructors
 	GameEngine();

@@ -13,20 +13,25 @@ class GameOverEngine
 {
 	//private variables
 	unsigned*& points;
-	unsigned cursorPointerPosition;
+	unsigned cursorPointerPosition, currentLetter;
+	std::stringstream nickname;
+
 	sf::Vector2f windowSize;
+	sf::RenderWindow* window;
 
 	bool inSave, inNickname;
+	bool quitDecision, saveDecision;
 
-	bool hold, holdConfirm;
+	bool hold, holdConfirm, holdBack;
+	bool holdTable[36];
 
 	sf::Font font;
-	sf::Text yesText, noText, confirmTextm, cancelText;
-	sf::Text score;
+	sf::Text yesText, noText, confirmText, cancelText;
+	sf::Text scoreText;
 
 	sf::Text letter1, letter2, letter3, letter4, letter5;
 
-	sf::Sprite pointer, background;
+	sf::Sprite pointer, backgroundSave, backgroundName;
 
 	//Resources
 	std::map<std::string, sf::Texture*> textures;
@@ -40,13 +45,16 @@ class GameOverEngine
 	void setPointer(int);
 	void colorizeOption(int);
 	void setDecision(int);
+	void setCurrentLetter(std::string);
 
 public:
 
 	//Public functions
 	void initGameOver();
 	void updateGameOver();
-	void renderGameOver();
+	void renderGameOver(sf::RenderTarget*);
+	const bool getDecision(int decision) const;
+	const std::string getNickName() const;
 
 	//Accesors
 	const sf::Vector2f getMousePos() const;

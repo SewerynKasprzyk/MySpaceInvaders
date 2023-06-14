@@ -79,8 +79,16 @@ void HiScoreEngine::initScores()
 
 		posName << i + 1 << ". " << element.name;
 		this->hiScores.push_back(new HiScore(element.score, posName.str(), sf::Vector2f(this->windowSize.x * (8.f / 32.f), this->windowSize.y * ((6.f + i) / 18.f)), sf::Vector2f(this->windowSize.x * (14.f / 32.f), this->windowSize.y * ((6.f + i) / 18.f))));
+
+		if (i == 0)
+		{
+			sf::Color greeny = sf::Color(122, 224, 124, 255);
+			this->hiScores[i]->colorize(greeny);
+		}
+
 		i = i + 1.f;
 	}
+
 }
 
 void HiScoreEngine::setPointer(int option)
@@ -131,11 +139,6 @@ void HiScoreEngine::colorizeOption(int option)
 
 void HiScoreEngine::setDecision(int decision)
 {
-	/// <summary>
-	/// /////////// TO DO
-	/// </summary>
-	/// <param name="decision"></param>
-
 	switch (decision)
 	{
 	case 0:
@@ -291,21 +294,16 @@ void HiScoreEngine::hiScoreRender(sf::RenderTarget* target)
 	target->draw(this->downText);
 	target->draw(this->backText);
 
-	//for (auto& hiScore : this->hiScores)
-	//{
-	//	hiScore->render(target);
-	//}
-
 	if (this->hiScores.size() != 0)
 	{
 		for (int i = this->visibleScores; i < 9 + this->visibleScores; i++)
 		{
-			this->hiScores[i]->render(target);
-
-			if (i >= this->hiScores.size() - 1)
+			if (i >= this->hiScores.size())
 			{
 				break;
 			}
+
+			this->hiScores[i]->render(target);
 		}
 	}
 }

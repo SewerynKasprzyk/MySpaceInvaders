@@ -2,7 +2,6 @@
 
 void HiScoreDB::saveDB()
 {
-	this->readDB();
 	this->file.open(this->path, std::ios::out | std::ofstream::trunc);
 
 	if (file.good() == false)
@@ -20,7 +19,7 @@ void HiScoreDB::saveDB()
 
 void HiScoreDB::readDB()
 {	
-
+	this->dbElements = {};
 	this->file.open(this->path, std::ios::in);
 
 	if (this->file.good() == false)
@@ -105,13 +104,14 @@ void HiScoreDB::checkSavePath()
 
 void HiScoreDB::reloadDB()
 {
-	this->dbElements = {};
+	//this->dbElements = {};
 	this->saveDB();
 }
 
 void HiScoreDB::addScore(HiScoreDbElement element)
 {
-	this->readDB();
+	//this->readDB();
+
 	this->dbElements.push_back(element);
 	this->sort();
 	this->saveDB();

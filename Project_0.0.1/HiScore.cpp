@@ -32,6 +32,12 @@ void HiScore::render(sf::RenderTarget* target)
 	target->draw(this->scoreText);
 }
 
+void HiScore::colorize(sf::Color color)
+{
+	this->scoreText.setFillColor(color);
+	this->nameText.setFillColor(color);
+}
+
 HiScore::HiScore(unsigned int score, std::string name, sf::Vector2f namePosition, sf::Vector2f scorePosition)
 {
 	this->score = score;

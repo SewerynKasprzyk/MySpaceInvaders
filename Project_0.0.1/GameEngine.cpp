@@ -59,6 +59,12 @@ void GameEngine::initCombat()
 	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo, this->explosions);
 }
 
+void GameEngine::initGameOver()
+{
+	this->gameOverEngine = new GameOverEngine(this->points, sf::Vector2f(this->window->getSize()), this->window);
+	this->gameOverEngine->initGameOver();
+}
+
 void GameEngine::restartInit()
 {
 	this->initMenu();
@@ -94,6 +100,11 @@ void GameEngine::update()
 	if (this->UserInHiScore)
 	{
 		this->updateHiScore();
+	}
+
+	if (this->UserInGameOver)
+	{
+		this->updateGameOver();
 	}
 }
 
@@ -168,6 +179,9 @@ void GameEngine::updateCombat()
 		if (this->combatEngine->playerDeathExplosionSequence())
 		{
 			this->UserInGameOver = true;
+			this->UserInHiScore = false;
+			this->UserRunGame = false;
+			this->userInMenu = false;
 		}
 	}
 
@@ -177,24 +191,6 @@ void GameEngine::updateCombat()
 void GameEngine::updateGame()
 {
 	this->updateInput();
-
-	if (this->UserInGameOver)
-	{
-		//this->gameOverSequence();
-
-		this->initVariables();
-
-		this->initMenu();
-		this->initHiScore();
-		this->initPlayer();
-		this->initEnemy();
-		this->initCombat();
-
-		this->UserInGameOver = false;
-		this->UserInHiScore = true;
-		this->userInMenu = false;
-		this->UserRunGame = false;
-	}
 
 	if (!this->paused && this->player->getState())
 	{
@@ -220,6 +216,7 @@ void GameEngine::updateMenu()
 		this->UserRunGame = true;
 		this->UserInHiScore = false;
 		this->userInMenu = false;
+		this->UserInGameOver = false;
 
 		this->initMenu();
 	}
@@ -230,6 +227,7 @@ void GameEngine::updateMenu()
 		this->UserRunGame = false;
 		this->UserInHiScore = true;
 		this->userInMenu = false;
+		this->UserInGameOver = false;
 
 		this->initMenu();
 	}
@@ -251,9 +249,55 @@ void GameEngine::updateHiScore()
 		this->UserRunGame = false;
 		this->UserInHiScore = false;
 		this->userInMenu = true;
+		this->UserInGameOver = false;
 
 		this->initHiScore();
 	}
+}
+
+void GameEngine::updateGameOver()
+{
+	this->gameOverEngine->updateGameOver();
+
+	if (this->gameOverEngine->getDecision(0))
+	{
+		this->initVariables();
+
+		//this->initMenu();
+		//this->initHiScore();
+		//this->initPlayer();
+		//this->initEnemy();
+		//this->initCombat();
+		this->initGameOver();
+
+		this->UserRunGame = false;
+		this->UserInHiScore = true;
+		this->userInMenu = false;
+		this->UserInGameOver = false;
+	}
+
+	if (this->gameOverEngine->getDecision(1))
+	{
+		HiScoreDB db;
+
+		db.addScore(HiScoreDbElement(this->player->getPoints(), this->gameOverEngine->getNickName()));
+
+		this->initVariables();
+
+		//this->initMenu();
+		//this->initHiScore();
+		this->initPlayer();
+		this->initEnemy();
+		this->initCombat();
+		this->initGameOver();
+		this->initHiScore();
+
+		this->UserRunGame = false;
+		this->UserInHiScore = true;
+		this->userInMenu = false;
+		this->UserInGameOver = false;
+	}
+
 }
 
 void GameEngine::updateEnemy()
@@ -279,6 +323,11 @@ void GameEngine::render()
 	if (this->UserInHiScore)
 	{
 		this->renderHiScore();
+	}
+
+	if (this->UserInGameOver)
+	{
+		this->renderGameOver();
 	}
 
 	this->window->display();
@@ -321,6 +370,11 @@ void GameEngine::renderHiScore()
 	this->hiScoreEngine->hiScoreRender(this->window);
 }
 
+void GameEngine::renderGameOver()
+{
+	this->gameOverEngine->renderGameOver(this->window);
+}
+
 //Constructors
 GameEngine::GameEngine()
 {
@@ -332,6 +386,7 @@ GameEngine::GameEngine()
 	this->initPlayer();
 	this->initEnemy();
 	this->initCombat();
+	this->initGameOver();
 }
 
 //Destructors
@@ -366,4 +421,5 @@ GameEngine::~GameEngine()
 	delete this->enemiesEngine;
 	delete this->menuEngine;
 	delete this->hiScoreEngine;
+	delete this->gameOverEngine;
 }

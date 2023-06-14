@@ -28,6 +28,7 @@ public:
 	//Public functions
 	void move(const float, const float);
 	void render(sf::RenderTarget*);
+	void colorize(sf::Color);
 
 	//Constructor
 	HiScore(unsigned int, std::string, sf::Vector2f, sf::Vector2f);
