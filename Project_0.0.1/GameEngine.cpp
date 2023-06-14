@@ -97,6 +97,7 @@ void GameEngine::restartInit()
 	this->initPlayer();
 	this->initEnemy();
 	this->initCombat();
+	this->initGameOver();
 }
 
 void GameEngine::run()
@@ -203,7 +204,7 @@ void GameEngine::updateCombat()
 	{
 		if (this->combatEngine->playerDeathExplosionSequence())
 		{
-			this->restartInit();
+			//this->restartInit();
 
 			this->UserInGameOver = true;
 			this->UserInHiScore = false;
