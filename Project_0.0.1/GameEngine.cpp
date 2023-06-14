@@ -8,7 +8,9 @@ void GameEngine::initVariables()
 	this->height = 540;
 	this->paused = false;
 	this->pauseHold = true;
-	this->points = 0;
+
+	this->points = new unsigned;
+	*this->points = 0;
 
 	this->userInMenu = true;
 	this->UserRunGame = false;
@@ -24,7 +26,7 @@ void GameEngine::initVariables()
 
 void GameEngine::initWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(this->width, this->height), "Title", sf::Style::Close);
+	this->window = new sf::RenderWindow(sf::VideoMode(this->width, this->height), "MySpaceInvaders", sf::Style::Close);
 
 	this->window->setFramerateLimit(144);
 	this->window->setVerticalSyncEnabled(false);
@@ -43,7 +45,7 @@ void GameEngine::initHiScore()
 
 void GameEngine::initPlayer()
 {
-	this->playerEngine = new PlayerEngine(this->player, this->window->getSize());
+	this->playerEngine = new PlayerEngine(this->player, this->window->getSize(), this->points);
 	this->playerEngine->initPlayer();
 	this->playerEngine->initGUI();
 }
@@ -264,10 +266,10 @@ void GameEngine::updateGameOver()
 		this->initVariables();
 
 		//this->initMenu();
-		//this->initHiScore();
-		//this->initPlayer();
-		//this->initEnemy();
-		//this->initCombat();
+		this->initHiScore();
+		this->initPlayer();
+		this->initEnemy();
+		this->initCombat();
 		this->initGameOver();
 
 		this->UserRunGame = false;

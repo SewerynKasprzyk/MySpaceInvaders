@@ -39,7 +39,7 @@ void PlayerEngine::updateGUI()
 
 void PlayerEngine::initPlayer()
 {
-	this->player = new Player(this->windowSize.x, this->windowSize.y, sf::Vector2f(this->windowSize));
+	this->player = new Player(this->windowSize.x, this->windowSize.y, sf::Vector2f(this->windowSize), this->points);
 }
 
 void PlayerEngine::initGUI()
@@ -75,7 +75,7 @@ void PlayerEngine::renderGUI(sf::RenderTarget* target)
 }
 
 //Constructor
-PlayerEngine::PlayerEngine(Player*& player, sf::Vector2u windowSize) : player(player)
+PlayerEngine::PlayerEngine(Player*& player, sf::Vector2u windowSize, unsigned*& points) : player(player), points(points)
 {
 	this->windowSize = windowSize;
 }

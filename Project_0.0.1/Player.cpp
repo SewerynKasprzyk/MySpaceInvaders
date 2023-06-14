@@ -17,7 +17,7 @@ void Player::initVariables(unsigned width, unsigned height)
 	this->hpMax = 100.f;
 	this->hp = this->hpMax;
 	this->alive = true;
-	this->points = 0;
+	*this->points = 0;
 }
 
 void Player::initTexture()
@@ -88,7 +88,7 @@ void Player::killPlayer()
 
 void Player::addPoints(unsigned points)
 {
-	this->points += points;
+	*this->points += points;
 }
 
 void Player::hidePlayer()
@@ -141,11 +141,11 @@ const bool Player::getState() const
 
 const unsigned Player::getPoints() const
 {
-	return this->points;
+	return *this->points;
 }
 
 
-Player::Player(unsigned posX, unsigned posY, sf::Vector2f  windowSize)
+Player::Player(unsigned posX, unsigned posY, sf::Vector2f windowSize, unsigned*& points) : points(points)
 {
 	this->windowSize = windowSize;
 	this->initVariables(posX, posY);

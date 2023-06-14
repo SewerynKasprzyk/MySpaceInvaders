@@ -181,6 +181,14 @@
     <ClInclude Include="MenuEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerEngine.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project_0.0.1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
+    <Image Include="Textures\Enemy_Sprites\invader_1_1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

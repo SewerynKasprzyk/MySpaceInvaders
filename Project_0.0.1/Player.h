@@ -12,7 +12,8 @@ class Player
 	//Private variables
 	sf::Sprite sprite;
 	sf::Texture texture;
-	unsigned width, height, points;
+	unsigned width, height;
+	unsigned*& points;
 	sf::Vector2f windowSize;
 	float hp, hpMax;
 	bool alive;
@@ -47,7 +48,7 @@ public:
 	const bool getState() const;
 	const unsigned getPoints() const;
 
-	Player(unsigned, unsigned, sf::Vector2f);
+	Player(unsigned, unsigned, sf::Vector2f, unsigned*&);
 	virtual ~Player();
 };
 

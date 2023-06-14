@@ -9,6 +9,8 @@ class PlayerEngine
 	Player*& player;
 	sf::Vector2u windowSize;
 
+	unsigned*& points;
+
 	//GUI
 	sf::Font font;
 	sf::Text pointsText;
@@ -25,7 +27,7 @@ public:
 	void renderGUI(sf::RenderTarget*);
 
 	//Constructor
-	PlayerEngine(Player*&, sf::Vector2u);
+	PlayerEngine(Player*&, sf::Vector2u, unsigned*&);
 
 	//Destructor
 	virtual ~PlayerEngine();

@@ -48,17 +48,41 @@ void HiScoreDB::readDB()
 
 			while (getline(stream2, string2, '|'))
 			{
+				std::regex rgx;
+				std::smatch match;
 
 				switch (nameOrScore)
 				{
 				case true:
-					name = string2;
-					nameOrScore = false;
 
+					rgx = ("([a-zA-Z0-9]{3,5})");
+
+					if (std::regex_search(string2, match, rgx)) 
+					{
+						name = match[0];
+					}
+					else
+					{
+						name = "?\\";
+					}
+
+					nameOrScore = false;
 					break;
 
 				case false:
-					score = stoi(string2);
+
+					rgx = ("([0-9]{1,9})");
+
+					if (std::regex_search(string2, match, rgx))
+					{
+						score = stoi(match[0]);
+					}
+					else
+					{
+						name = "?~";
+						score = 0;
+					}
+
 					nameOrScore = true;
 					break;
 				}

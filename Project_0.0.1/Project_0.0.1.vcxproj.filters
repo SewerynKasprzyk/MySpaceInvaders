@@ -160,5 +160,21 @@
     <ClInclude Include="GameOverEngine.h">
       <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project_0.0.1.rc">
+      <Filter>Pliki zasobów</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\Enemy_Sprites\invader_1_1.png">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
+    <Image Include="icon.ico">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
   </ItemGroup>
 </Project>

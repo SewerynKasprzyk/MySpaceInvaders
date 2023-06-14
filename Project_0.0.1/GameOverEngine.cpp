@@ -43,7 +43,7 @@ void GameOverEngine::initText()
 
 	std::stringstream ss;
 
-	ss << "SCORE: " << "0";
+	ss << "SCORE: " << *this->points;
 
 	this->scoreText.setString(ss.str());
 
@@ -283,6 +283,12 @@ void GameOverEngine::initGameOver()
 
 void GameOverEngine::updateGameOver()
 {
+	std::stringstream ss;
+
+	ss << "SCORE: " << *this->points;
+
+	this->scoreText.setString(ss.str());
+
 	//QUESTION ABOUT SAVING SUBMENU
 	if (this->inSave)
 	{

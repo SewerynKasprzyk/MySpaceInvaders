@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include <filesystem>
+#include <regex>
 
 class HiScoreDB
 {
