@@ -65,7 +65,7 @@ class GameEngine
 	void initEnemy();
 	void initCombat();
 	void restartInit();
-	void gameOverSequence();
+	//void gameOverSequence();
 
 public:
 	//Public Functions
