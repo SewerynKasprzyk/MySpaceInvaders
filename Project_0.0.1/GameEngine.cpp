@@ -180,7 +180,7 @@ void GameEngine::updateGame()
 
 	if (this->UserInGameOver)
 	{
-		this->gameOverSequence();
+		//this->gameOverSequence();
 
 		this->initVariables();
 
