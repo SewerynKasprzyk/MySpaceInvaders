@@ -34,8 +34,7 @@ class GameEngine
 
 	//Helper engines
 	MenuEngine* menuEngine;
-	HiScoreEngine* hiScoreEngine;
-	PlayerEngine* playerEngine;
+	HiScoreEngine* hiScoreEngine;	PlayerEngine* playerEngine;
 	CombatEngine* combatEngine;
 	EnemiesEngine* enemiesEngine;
 
