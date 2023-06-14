@@ -78,9 +78,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Pliki źródłowe\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverEngine.cpp">
-      <Filter>Pliki źródłowe\Engine</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll">
@@ -156,9 +153,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Pliki nagłówkowe\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverEngine.h">
-      <Filter>Pliki nagłówkowe\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
