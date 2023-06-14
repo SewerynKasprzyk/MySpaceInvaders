@@ -255,4 +255,8 @@ MenuEngine::MenuEngine(unsigned*& points, sf::Vector2f windowSize, sf::RenderWin
 
 MenuEngine::~MenuEngine()
 {
+	for (auto& i : this->textures)
+	{
+		delete i.second;
+	}
 }

@@ -69,6 +69,12 @@ void HiScoreEngine::initScores()
 {
 	HiScoreDB db;
 
+
+	for (auto* i : this->hiScores)
+	{
+		delete i;
+	}
+
 	this->hiScores = {};
 
 	float i = 0;
@@ -333,4 +339,13 @@ HiScoreEngine::HiScoreEngine(sf::Vector2f windowSize, sf::RenderWindow* window)
 
 HiScoreEngine::~HiScoreEngine()
 {
+	for (auto& i : this->textures)
+	{
+		delete i.second;
+	}
+
+	for (auto* i : this->hiScores)
+	{
+		delete i;
+	}
 }

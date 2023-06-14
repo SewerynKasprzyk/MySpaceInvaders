@@ -9,6 +9,7 @@ void GameEngine::initVariables()
 	this->paused = false;
 	this->pauseHold = true;
 
+	delete this->points;
 	this->points = new unsigned;
 	*this->points = 0;
 
@@ -19,6 +20,20 @@ void GameEngine::initVariables()
 
 	this->deathExplosionEnded = false;
 
+	for (auto* i : this->enemies)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->bullets)
+	{
+		delete i;
+	}
+
+	for (auto* i : this->explosions)
+	{
+		delete i;
+	}
 	this->enemies = {};
 	this->bullets = {};
 	this->explosions = {};
@@ -26,6 +41,7 @@ void GameEngine::initVariables()
 
 void GameEngine::initWindow()
 {
+	delete this->window;
 	this->window = new sf::RenderWindow(sf::VideoMode(this->width, this->height), "MySpaceInvaders", sf::Style::Close);
 
 	this->window->setFramerateLimit(144);
@@ -34,17 +50,20 @@ void GameEngine::initWindow()
 
 void GameEngine::initMenu()
 {
+	delete this->menuEngine;
 	this->menuEngine = new MenuEngine(this->points, sf::Vector2f(this->window->getSize()), this->window);
 }
 
 void GameEngine::initHiScore()
 {
+	delete this->hiScoreEngine;
 	this->hiScoreEngine = new HiScoreEngine(sf::Vector2f(this->window->getSize()), this->window);
 	this->hiScoreEngine->initHiScore();
 }
 
 void GameEngine::initPlayer()
 {
+	delete this->playerEngine;
 	this->playerEngine = new PlayerEngine(this->player, this->window->getSize(), this->points);
 	this->playerEngine->initPlayer();
 	this->playerEngine->initGUI();
@@ -52,23 +71,27 @@ void GameEngine::initPlayer()
 
 void GameEngine::initEnemy()
 {
+	delete this->enemiesEngine;
 	this->enemiesEngine = new EnemiesEngine(this->window->getSize(), this->enemies, this->ufo);
 	this->enemiesEngine->initEnemies();
 }
 
 void GameEngine::initCombat()
 {
+	delete this->combatEngine;
 	this->combatEngine = new CombatEngine(this->window->getSize(), this->bullets, this->enemies, this->player, this->ufo, this->explosions);
 }
 
 void GameEngine::initGameOver()
 {
+	delete this->gameOverEngine;
 	this->gameOverEngine = new GameOverEngine(this->points, sf::Vector2f(this->window->getSize()), this->window);
 	this->gameOverEngine->initGameOver();
 }
 
 void GameEngine::restartInit()
 {
+	this->initVariables();
 	this->initMenu();
 	this->initHiScore();
 	this->initPlayer();
@@ -180,6 +203,8 @@ void GameEngine::updateCombat()
 	{
 		if (this->combatEngine->playerDeathExplosionSequence())
 		{
+			this->restartInit();
+
 			this->UserInGameOver = true;
 			this->UserInHiScore = false;
 			this->UserRunGame = false;
@@ -215,23 +240,23 @@ void GameEngine::updateMenu()
 	//Play decision
 	if (this->menuEngine->getDecision(0))
 	{
+		this->restartInit();
+
 		this->UserRunGame = true;
 		this->UserInHiScore = false;
 		this->userInMenu = false;
 		this->UserInGameOver = false;
-
-		this->initMenu();
 	}
 
 	//Hi-Score decision
 	if(this->menuEngine->getDecision(1))
 	{
+		this->restartInit();
+
 		this->UserRunGame = false;
 		this->UserInHiScore = true;
 		this->userInMenu = false;
 		this->UserInGameOver = false;
-
-		this->initMenu();
 	}
 
 	//Quit decision
@@ -248,12 +273,12 @@ void GameEngine::updateHiScore()
 	//back decision
 	if (this->hiScoreEngine->getDecision(2))
 	{
+		this->restartInit();
+
 		this->UserRunGame = false;
 		this->UserInHiScore = false;
 		this->userInMenu = true;
 		this->UserInGameOver = false;
-
-		this->initHiScore();
 	}
 }
 
@@ -263,14 +288,7 @@ void GameEngine::updateGameOver()
 
 	if (this->gameOverEngine->getDecision(0))
 	{
-		this->initVariables();
-
-		//this->initMenu();
-		this->initHiScore();
-		this->initPlayer();
-		this->initEnemy();
-		this->initCombat();
-		this->initGameOver();
+		this->restartInit();
 
 		this->UserRunGame = false;
 		this->UserInHiScore = true;
@@ -284,15 +302,7 @@ void GameEngine::updateGameOver()
 
 		db.addScore(HiScoreDbElement(this->player->getPoints(), this->gameOverEngine->getNickName()));
 
-		this->initVariables();
-
-		//this->initMenu();
-		//this->initHiScore();
-		this->initPlayer();
-		this->initEnemy();
-		this->initCombat();
-		this->initGameOver();
-		this->initHiScore();
+		this->restartInit();
 
 		this->UserRunGame = false;
 		this->UserInHiScore = true;

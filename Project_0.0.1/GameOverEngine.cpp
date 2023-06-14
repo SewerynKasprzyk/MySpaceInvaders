@@ -960,4 +960,8 @@ GameOverEngine::GameOverEngine(unsigned*& points, sf::Vector2f windowSize, sf::R
 
 GameOverEngine::~GameOverEngine()
 {
+	for (auto& i : this->textures)
+	{
+		delete i.second;
+	}
 }

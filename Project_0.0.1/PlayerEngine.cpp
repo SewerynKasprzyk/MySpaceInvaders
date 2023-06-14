@@ -39,6 +39,7 @@ void PlayerEngine::updateGUI()
 
 void PlayerEngine::initPlayer()
 {
+	delete this->player;
 	this->player = new Player(this->windowSize.x, this->windowSize.y, sf::Vector2f(this->windowSize), this->points);
 }
 
