@@ -68,10 +68,6 @@ void GameEngine::restartInit()
 	this->initCombat();
 }
 
-void GameEngine::gameOverSequence()
-{
-}
-
 void GameEngine::run()
 {
 	while (this->window->isOpen())
